@@ -1,2 +1,2 @@
-# project_hangman
+# Hangman
 Hangman game created for a final class project
