@@ -6,11 +6,6 @@
 *   #F5F5F5
 * =============== */
 
-.intro-screen {
-    /* Background pattern from subtlepatterns.com */
-    background: url('../img/lined_paper.png');
-}
-
 .stick-figure {
     position: absolute;
     left: 8vw;
@@ -22,6 +17,10 @@
     opacity: .9;
 }
 
+.thought-bubble {
+    font-size: 44px;
+}
+
 .title-area {
     float: right;
     width: 70vw;
@@ -31,7 +30,6 @@
 }
 
 .title {
-    font-family: Amatic SC;
     font-size: 35vh;
 }
 

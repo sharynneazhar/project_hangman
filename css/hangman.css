@@ -7,10 +7,15 @@
 * =============== */
 
 html * {
-    font-family: Open Sans;
+    /* Background pattern from subtlepatterns.com */
+    font-family: Amatic SC;
     font-weight: 300;
     margin: 0;
     padding: 0;
+}
+
+body {
+    background: url('../img/lined_paper.png');
 }
 
 .button-area {
@@ -21,10 +26,10 @@ html * {
 
 .button-area button {
     width: 100%;
-    padding: 3vh;
+    padding: 1.5vh;
     background-color: transparent;
     border-radius: 0;
     border: none;
     color: #F5F5F5;
-    font-size: 24px;
+    font-size: 6vh;
 }
