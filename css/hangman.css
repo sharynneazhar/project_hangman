@@ -1,0 +1,30 @@
+/* == PALETTE ===
+*   #FF5722
+*   #9E9E9E
+*   #607D8B
+*   #000000
+*   #F5F5F5
+* =============== */
+
+html * {
+    font-family: Open Sans;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+}
+
+.button-area {
+    margin: 30px auto;
+    background-color: #FF5722;
+    text-align: center;
+}
+
+.button-area button {
+    width: 100%;
+    padding: 3vh;
+    background-color: transparent;
+    border-radius: 0;
+    border: none;
+    color: #F5F5F5;
+    font-size: 24px;
+}

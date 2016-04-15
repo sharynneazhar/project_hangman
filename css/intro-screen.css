@@ -1,0 +1,40 @@
+/* == PALETTE ===
+*   #FF5722
+*   #9E9E9E
+*   #607D8B
+*   #000000
+*   #F5F5F5
+* =============== */
+
+.intro-screen {
+    /* Background pattern from subtlepatterns.com */
+    background: url('../img/lined_paper.png');
+}
+
+.stick-figure {
+    position: absolute;
+    left: 8vw;
+    bottom: 0;
+}
+
+.stick-figure img {
+    height: 80vh;
+    opacity: .9;
+}
+
+.title-area {
+    float: right;
+    width: 70vw;
+    margin-right: 80px;
+    padding: 10px 50px;
+    text-align: center;
+}
+
+.title {
+    font-family: Amatic SC;
+    font-size: 35vh;
+}
+
+.play-button-area {
+    width: 18vw;
+}
