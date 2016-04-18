@@ -19,7 +19,9 @@ body {
 }
 
 .button-area {
-    margin: 30px auto;
+    width: 18vw;
+    display: inline-block;
+    margin: 30px 15px;
     background-color: #FF5722;
     text-align: center;
 }
@@ -32,4 +34,17 @@ body {
     border: none;
     color: #F5F5F5;
     font-size: 6vh;
+}
+
+.back-button {
+    background-color: transparent !important;
+    position: absolute;
+    left: 10px;
+    width: 15vw;
+    margin-top: 10px;
+}
+
+.back-button button {
+    color: #000000;
+    font-weight: 600;
 }
