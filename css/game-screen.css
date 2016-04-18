@@ -5,30 +5,42 @@
 *   #000000
 *   #F5F5F5
 * =============== */
+
+.container {
+    width: 90% !important;
+    margin: 0 auto;
+    padding-top: 80px;
+}
+
 .hangman {
-    display: inline-block;
     width: 35vw;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .hangman img {
-    height: 500px;
-    margin: 80px;
+    height: 80vh;
 }
 
 .game-area {
-    display: inline-block;
-    margin-left: 30px;
-    padding: 50px;
+    text-align: center;
+}
+
+.word {
+    font-size: 15vh;
+}
+
+.guesses {
+    margin-bottom: 50px;
+    font-size: 10vh;
+    color: #607D8B;
 }
 
 .keyboard {
-    width: 45vw;
     margin: 15px auto;
     padding: 0;
 }
 
-.keyboard li {
+.letters {
     display: inline-block;
     margin: 10px;
     width: 50px;
