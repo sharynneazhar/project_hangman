@@ -12,8 +12,8 @@ $(function() {
 
 	var audio = $('#clickSound')[0];
 	var audio2 = $('#clickSound2')[0];
-	$('button, .keyboard').mousedown(function() { audio2.play(); });
-	$('button, .keyboard').mouseup(function() { audio.play(); });
+	$('button').mousedown(function() { audio2.play(); });
+	$('button').mouseup(function() { audio.play(); });
 
     ///////////////////////////
     // show hangman series ///
@@ -41,5 +41,7 @@ $(function() {
         $(this).css('background-color', "#607D8B");
     });
 
+    $('.letters').mousedown(function() { audio2.play(); });
+	$('.letters').mouseup(function() { audio.play(); });
 
 });
