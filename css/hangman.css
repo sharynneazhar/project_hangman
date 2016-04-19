@@ -34,6 +34,7 @@ body {
     border: none;
     color: #F5F5F5;
     font-size: 6vh;
+    cursor: pointer;
 }
 
 .back-button {

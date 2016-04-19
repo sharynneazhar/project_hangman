@@ -10,6 +10,11 @@ $(function() {
         location.href = "index.html";
     });
 
+	var audio = $('#clickSound')[0];
+	var audio2 = $('#clickSound2')[0];
+	$('button, .keyboard').mousedown(function() { audio2.play(); });
+	$('button, .keyboard').mouseup(function() { audio.play(); });
+
     ///////////////////////////
     // show hangman series ///
     //////////////////////////
@@ -31,6 +36,10 @@ $(function() {
         var singleKey = $('<li class=\"letters\"></li>').text(letters[i]);
         $('.keys').append(singleKey);
     }
+
+    $('.letters').click(function() {
+        $(this).css('background-color', "#607D8B");
+    });
 
 
 });
