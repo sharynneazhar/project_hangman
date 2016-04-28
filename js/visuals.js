@@ -18,7 +18,7 @@ $(function() {
     ///////////////////////////
     // show hangman series ///
     //////////////////////////
-    var source = 'img/hangman-3.png';
+    var source = 'img/hangman-0.png';
     var image = $('<img />', { src: source });
     $('.hangman').append(image);
 
