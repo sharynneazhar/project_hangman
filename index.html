@@ -10,7 +10,6 @@
     <!-- stylesheets -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/hangman.css">
-    <link rel="stylesheet" href="css/intro-screen.css">
 
     <!-- font style -->
     <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -21,13 +20,15 @@
     <script src="js/visuals.js" type="text/javascript"></script> <!-- sharynne's front end scripts -->
 
 </head>
-<body class="intro-screen">
-    <div class="stick-figure">
-        <div class="thought-bubble">Oh no...</div>
-        <!-- image from public domain pd4pic.com -->
-        <img src="img/stickman_intro.png" />
+<body class="intro-screen row">
+    <div class="hidden-xs col-md-3">
+        <div class="stick-figure center-block">
+            <div class="thought-bubble">Oh no...</div>
+            <!-- image from public domain pd4pic.com -->
+            <img src="img/stickman_intro.png" />
+        </div>
     </div>
-    <div class="title-area">
+    <div class="title-area center-block text-center col-md-9">
         <div class="title">Hangman!</div>
         <div class="button-area">
             <button class="start" type="button">Start Game</button>

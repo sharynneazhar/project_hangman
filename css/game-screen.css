@@ -8,36 +8,26 @@
 
 .container {
     width: 90% !important;
-    margin: 0 auto;
-    padding-top: 80px;
-}
-
-.hangman {
-    width: 35vw;
-    margin-top: 40px;
 }
 
 .hangman img {
-    height: 80vh;
-}
-
-.game-area {
-    text-align: center;
+    margin-top: 80px;
+    width: 500px;
 }
 
 .word {
-    font-size: 15vh;
+    font-size: 10vw;
 }
 
 .guesses {
     margin-bottom: 50px;
-    font-size: 10vh;
+    font-size: 6vw;
     color: #607D8B;
 }
 
 .keyboard {
     margin: 15px auto;
-    padding: 0;
+    width: 80%;
 }
 
 .letters {
@@ -52,4 +42,34 @@
     font-size: 32px;
     font-weight: 900;
     cursor: pointer;
+}
+
+
+/* ===== RESPONSIVE STYLES ===== */
+
+@media (max-width: 978px) {
+    .container {
+        width: 100%;
+        padding: 0;
+    }
+
+    .hangman img {
+        margin-top: 15px;
+        width: 100%;
+    }
+
+    .keyboard {
+        width: 100%;
+    }
+
+    .keys {
+        padding: 0;
+    }
+
+    .letters {
+        margin: 5px;
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+    }
 }
