@@ -54,6 +54,12 @@ body {
     border: none;
 }
 
+.button-topic {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* ===== INTRO SCREEN STYLES ===== */
 
@@ -87,6 +93,20 @@ body {
 @media (max-width: 978px) {
     body {
         padding: 0;
+    }
+
+    .title {
+        font-size: 30vw;
+    }
+
+    .button-area {
+        width: 65%;
+        margin: 15px auto;
+        display: block;
+    }
+
+    .button-area button {
+        font-size: 10vw;
     }
 
     .back-button {

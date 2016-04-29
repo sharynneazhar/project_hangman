@@ -39,6 +39,7 @@ $(function() {
 
     $('.letters').click(function() {
         $(this).css('background-color', "#607D8B");
+        $('.guesses').text($('.guesses').html() + $(this).html());
     });
 
     $('.letters').mousedown(function() { audio2.play(); });
