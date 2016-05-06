@@ -1,5 +1,5 @@
 # Hangman
-Hangman game created for a final class project
+A Javascript-based Hangman game created for a class project (EECS 368 - Programming Languages and Paradigms)
 
 #### Screenshots
 
