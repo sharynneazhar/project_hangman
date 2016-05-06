@@ -1,6 +1,8 @@
 # Hangman
 A Javascript-based Hangman game created for a class project (EECS 368 - Programming Languages and Paradigms)
 
+[Click here to see the page!](http://sharynneazhar.github.io/project_hangman/)
+
 #### Screenshots
 
 ######Full View
