@@ -2,18 +2,24 @@ $(function() {
     ////////////////////////////
     // button event handling //
     ///////////////////////////
+
     $('.start').click(function() {
-        location.href = "game.html";
+        location.href = 'game.html';
     });
 
     $('.back').click(function() {
-        location.href = "index.html";
+        location.href = 'index.html';
     });
 
-	var audio = $('#clickSound')[0];
-	var audio2 = $('#clickSound2')[0];
-	$('button').mousedown(function() { audio2.play(); });
-	$('button').mouseup(function() { audio.play(); });
+    $('.add').click(function() {
+        location.href = 'add-words.html';
+    });
+
+    $('.mode').click(function() {
+        $(this).text(function(i, text) {
+            return text === 'Select Mode: P2P' ? 'Select Mode: AI' : 'Select Mode: P2P';
+        })
+    });
 
     ///////////////////////////
     // show hangman series ///
@@ -21,6 +27,7 @@ $(function() {
     var source = 'img/hangman-0.png';
     var image = $('<img />', { src: source });
     $('.hangman').append(image);
+
 
     /////////////////////////
     // generate keyboard ///
@@ -38,11 +45,37 @@ $(function() {
     }
 
     $('.letters').click(function() {
-        $(this).css('background-color', "#607D8B");
+        $(this).css('background-color', '#607D8B');
         $('.guesses').text($('.guesses').html() + $(this).html());
     });
 
-    $('.letters').mousedown(function() { audio2.play(); });
-	$('.letters').mouseup(function() { audio.play(); });
+    //////////////////////////
+    // show word to guess ///
+    /////////////////////////
+    var wordList = ['cat'];
+    var word = wordList[0];
+
+    for (var i = 0; i < word.length; i++) {
+        $('.word').append('-');
+    }
+
+    ////////////////////
+    // adding words ///
+    ///////////////////
+    $('input[name=add]').keyup(function(event){
+        if (event.keyCode == 13) {
+            $('.add-word').click();
+        }
+    });
+
+    $('.add-word').click(function(event) {
+        event.preventDefault();
+        var inputValue = $('input[name=add]').val();
+        if (inputValue.length > 0) {
+            wordList.push(inputValue);
+            $('.word-list').prepend('<li class=\"list-group-item new-word\">' + inputValue + '</li>');
+        }
+        $('input[name=add]').val('');
+    });
 
 });

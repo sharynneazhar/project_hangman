@@ -1,32 +1,25 @@
-/* == PALETTE ===
-*   #FF5722
-*   #9E9E9E
-*   #607D8B
-*   #000000
-*   #F5F5F5
-* =============== */
-
-.container {
-    width: 90% !important;
+.game-container {
+    width: 95% !important;
+    margin-top: 30px;
 }
 
 .hangman img {
-    margin-top: 80px;
     width: 500px;
+    margin-top: 20px;
 }
 
 .word {
-    font-size: 10vw;
+    font-size: 10vh;
 }
 
 .guesses {
-    margin-bottom: 50px;
-    font-size: 6vw;
+    margin-bottom: 40px;
+    font-size: 8vh;
     color: #607D8B;
 }
 
 .keyboard {
-    margin: 15px auto;
+    margin: 10px auto;
     width: 80%;
 }
 
@@ -35,7 +28,7 @@
     margin: 10px;
     width: 50px;
     height: 50px;
-    background-color: #FF5722;
+    background-color: #FF5722;;
     color: #F5F5F5;
     list-style: none;
     text-align: center;
@@ -55,7 +48,16 @@
 
     .hangman img {
         margin-top: 15px;
-        width: 100%;
+        width: 90%;
+    }
+
+    .word {
+        font-size: 8vh;
+    }
+
+    .guesses {
+        margin-bottom: 20px;
+        font-size: 5vh;
     }
 
     .keyboard {

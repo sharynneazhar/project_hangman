@@ -1,0 +1,87 @@
+.add-heading {
+    margin-top: -40px;
+    margin-bottom: 30px;
+    font-size: 8vw;
+}
+
+.add-container {
+    width: 80%;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.add-field {
+    display: block;
+    padding: 5px;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.add-btn {
+    background-color: #607D8B;
+}
+
+.add-btn button {
+    font-size: 24px;
+}
+
+.word-list {
+    width: 50%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.new-word {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.stick-figure-add {
+    position: fixed;
+    right: 15px;
+    bottom: 8px;
+}
+
+.stick-figure-add img {
+    height: 40vh;
+    opacity: .9;
+}
+
+.stick-figure-add .thought-bubble {
+    font-size: 4vh;
+    margin-bottom: 10px;
+}
+
+
+/* ===== RESPONSIVE STYLES ===== */
+
+@media (max-width: 978px) {
+    .add-heading {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        font-size: 15vw;
+    }
+
+    .add-field {
+        font-size: 24px;
+    }
+
+    .new-word {
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    .add-btn {
+        display: inline-block;
+        margin: 20px;
+        width: 18vw;
+    }
+
+    .add-btn button {
+        font-size: 18px;
+    }
+}

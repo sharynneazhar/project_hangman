@@ -7,18 +7,22 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Hangman</title>
 
-    <!-- stylesheets -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- font style -->
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="css/hangman.css">
     <link rel="stylesheet" href="css/game-screen.css">
-
-    <!-- font style -->
-    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Open+Sans:400,300' rel='stylesheet' type='text/css'>
-
-    <!-- JavaScript plugins -->
-    <script src="js/jquery-2.1.1.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="js/visuals.js" type="text/javascript"></script> <!-- sharynne's front end scripts -->
+    <script src="js/visuals.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -32,14 +36,15 @@
     </div>
 
     <!-- holder for hangman -->
-    <div class="container center-block text-center row">
+    <div class="game-container center-block text-center row">
         <div class="col-md-4 hangman"></div>
         <div class="col-md-8 center-block">
             <!-- TODO place the word to guess here -->
-            <div class="word">P-r-dig-s</div>
+            <div class="word"></div>
             <div class="guesses">Guesses: </div>
             <div class="keyboard"></div>
         </div>
     </div>
+
 </body>
 </html>

@@ -1,10 +1,10 @@
-/* == PALETTE ===
-*   #FF5722
-*   #9E9E9E
-*   #607D8B
-*   #000000
-*   #F5F5F5
-* =============== */
+/*
+$orange:    #FF5722;
+$slate:     #9E9E9E;
+$blue-gray: #607D8B;
+$black:     #000000;
+$white:     #F5F5F5;
+*/
 
 html {
     /* Background pattern from subtlepatterns.com */
@@ -17,13 +17,14 @@ body {
     background: url('../img/lined_paper.png');
     font-family: Amatic SC;
     font-weight: 300;
-    padding: 10px 50px;
+    padding: 10px 20px;
 }
 
+
 .button-area {
-    width: 18vw;
+    width: 15vw;
     display: inline-block;
-    margin: 30px 15px;
+    margin: 20px 15px;
     background-color: #FF5722;
     text-align: center;
 }
@@ -35,7 +36,7 @@ body {
     border-radius: 0;
     border: none;
     color: #F5F5F5;
-    font-size: 4vw;
+    font-size: 3vw;
     cursor: pointer;
 }
 
@@ -48,13 +49,13 @@ body {
 .back-button button {
     background-color: transparent;
     color: #000000;
-    font-size: 3vw;
+    font-size: 4vh;
     font-weight: 600;
     border-radius: 0;
     border: none;
 }
 
-.button-topic {
+.button-mode {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -66,7 +67,7 @@ body {
 .stick-figure {
     position: fixed;
     bottom: 2px;
-    padding-left: 50px;
+    padding-left: 80px;
     padding-bottom: 30px;
 }
 
@@ -80,11 +81,11 @@ body {
 }
 
 .title-area {
-    padding-top: 5vh;
+    padding-top: 1vh;
 }
 
 .title {
-    font-size: 20vw;
+    font-size: 16vw;
 }
 
 
