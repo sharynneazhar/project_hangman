@@ -31,21 +31,26 @@
         <div class="back-button">
             <button class="back" type="button">
                 <span class="glyphicon glyphicon-menu-left" style="font-size: 18px"></span>
-                Go Back
+                Home
             </button>
         </div>
     </div>
 
-    <div class="add-heading text-center">Add Your Own Words</div>
+    <div class="add-heading text-center">Create Your Own Word Bank</div>
     <div class="add-container">
-        <input class="add-field" type="text" name="add">
+        <div class="input-group">
+            <label for="word">Word: </label>
+            <input class="add-field" type="text" name="word">
+        </div>
+
         <div class="button-area add-btn">
             <button class="add-word" type="button">Add Word</button>
         </div>
         <div class="button-area add-btn">
-            <button class="start" type="button">Play Now</button>
+            <button class="play" type="button">Play Now</button>
         </div>
 
+        <!-- this is where the list of added words to show up -->
         <ul class="list-group word-list"></ul>
 
         <div class="stick-figure-add center-block visible-lg-block">

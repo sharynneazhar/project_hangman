@@ -2,17 +2,12 @@ $(function() {
     ////////////////////////////
     // button event handling //
     ///////////////////////////
-
-    $('.start').click(function() {
-        location.href = 'game.html';
+    $('.play').click(function() {
+        location.href = 'pick-topic.html';
     });
 
     $('.back').click(function() {
         location.href = 'index.html';
-    });
-
-    $('.add').click(function() {
-        location.href = 'add-words.html';
     });
 
     $('.mode').click(function() {
@@ -21,9 +16,53 @@ $(function() {
         })
     });
 
-    ///////////////////////////
-    // show hangman series ///
     //////////////////////////
+    // ask for which topic //
+    /////////////////////////
+    $('.states').click(function() {
+        // TODO flag engine to grab words from the states word bank
+        location.href = 'game.html';
+    });
+
+    $('.president').click(function() {
+        // TODO flag engine to grab words from presidents wordbank
+        location.href = 'game.html';
+    });
+
+    $('.countries').click(function() {
+        // TODO flag engine to grab words from countries wordbank
+        location.href = 'game.html';
+    });
+
+    $('.custom-topic').click(function() {
+        // TODO flag engine to grab words from the custom wordbank
+        location.href = 'add-words.html';
+    });
+
+    ////////////////////////
+    // adding new topics //
+    ///////////////////////
+
+    $('input[name=word]').keyup(function(event){
+        if (event.keyCode == 13) {
+            $('.add-word').click();
+        }
+    });
+
+    $('.add-word').click(function(event) {
+        event.preventDefault();
+        var inputValue = $('input[name=word]').val();
+        if (inputValue.length > 0) {
+            wordList.push(inputValue);
+            $('.word-list').prepend('<li class=\"list-group-item new-word\">' + inputValue + '</li>');
+        }
+        $('input[name=word]').val('');
+    });
+
+
+    /////////////////////////////
+    // show hangman graphics ///
+    ////////////////////////////
     var source = 'img/hangman-0.png';
     var image = $('<img />', { src: source });
     $('.hangman').append(image);
@@ -58,24 +97,5 @@ $(function() {
     for (var i = 0; i < word.length; i++) {
         $('.word').append('-');
     }
-
-    ////////////////////
-    // adding words ///
-    ///////////////////
-    $('input[name=add]').keyup(function(event){
-        if (event.keyCode == 13) {
-            $('.add-word').click();
-        }
-    });
-
-    $('.add-word').click(function(event) {
-        event.preventDefault();
-        var inputValue = $('input[name=add]').val();
-        if (inputValue.length > 0) {
-            wordList.push(inputValue);
-            $('.word-list').prepend('<li class=\"list-group-item new-word\">' + inputValue + '</li>');
-        }
-        $('input[name=add]').val('');
-    });
 
 });

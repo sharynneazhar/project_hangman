@@ -10,18 +10,30 @@
     text-align: center;
 }
 
+.input-group {
+    width: 50%;
+    margin: 15px auto;
+}
+
+.input-group > * {
+    display: inline-block;
+}
+
+.input-group label {
+    font-size: 32px;
+    padding-right: 30px;
+}
+
 .add-field {
-    display: block;
     padding: 5px;
     width: 80%;
     margin: 0 auto;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: bold;
-    text-align: center;
 }
 
 .add-btn {
-    background-color: #607D8B;
+    background-color: #FF5722;
 }
 
 .add-btn button {
@@ -55,7 +67,6 @@
     font-size: 4vh;
     margin-bottom: 10px;
 }
-
 
 /* ===== RESPONSIVE STYLES ===== */
 
