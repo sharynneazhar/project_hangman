@@ -52,10 +52,17 @@ $(function() {
     });
 
     $('.custom-topic').click(function() {
-        // TODO flag engine to grab words from the custom wordbank
         location.href = 'add-words.html';
     });
 
+    $('.play-custom').click(function() {
+        // TODO flag engine to grab words from the custom wordbank
+        if (!ai) {
+			location.href = 'game.html';
+		} else {
+			location.href = 'roboGame.html';
+		}
+    });
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /// CUSTOM WORD BANK SECTION by Levi Clark
