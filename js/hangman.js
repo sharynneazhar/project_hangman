@@ -141,7 +141,7 @@ $(function() {
         // push to the letters guessed array and display on screen
         var letterClicked = $(this).html();
         lettersGuessed.push(letterClicked);
-        $('.guesses').text($('.guesses').html() + $(this).html());
+        $('.guesses').text($('.guesses').html() + letterClicked);
 
         // if the letter guessed is in the word then display on the screen
         for (var i = 0; i < wordToGuess.length; i++) {
