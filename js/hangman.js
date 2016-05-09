@@ -164,7 +164,7 @@ $(function() {
             $('.hangman').html(image);
             $('.score').html('Score: ' + score);
             $('.guesses').html('Guesses: ');
-            $('.letters').css('background-color', '#FF5722');
+            $('.letters').removeClass('disabled');
 
             for (var i = 0; i < wordToGuess.length; i++) {
                 wordBlank[i] = ' ';
