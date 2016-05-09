@@ -1,5 +1,9 @@
 <?php
 
+////////////////////////////////////////////////
+// CUSTOM WORD BANK STORAGE BY LEVI CLARK
+///////////////////////////////////////////////
+
 date_default_timezone_set('America/Chicago');
 
 error_reporting(E_ALL)

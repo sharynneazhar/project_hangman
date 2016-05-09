@@ -5,7 +5,12 @@
 
 .hangman img {
     width: 500px;
-    margin-top: 20px;
+    margin-top: 40px;
+}
+
+.topic {
+    margin-top: -60px;
+    font-size: 6vw;
 }
 
 .word {
@@ -13,8 +18,22 @@
 }
 
 .guesses {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 8vh;
+    color: #607D8B;
+}
+
+.score {
+    display: inline-block;
+    margin-bottom: 40px;
+    margin-right: 60px;
+    font-size: 5vh;
+    color: #607D8B;
+}
+
+.strikes {
+    display: inline-block;
+    font-size: 5vh;
     color: #607D8B;
 }
 
@@ -47,6 +66,11 @@
     cursor: pointer;
 }
 
+.disabled {
+    pointer-events: none;
+    background-color: #607D8B;
+}
+
 
 /* ===== RESPONSIVE STYLES ===== */
 
@@ -66,8 +90,20 @@
     }
 
     .guesses {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         font-size: 5vh;
+    }
+
+    .score {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 3vh;
+    }
+
+    .strikes {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 3vh;
     }
 
     .roboWord {

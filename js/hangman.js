@@ -24,8 +24,10 @@ $(function() {
 
 
     // button handling for topic pick
+    var topic = sessionStorage.getItem('topic-flag') || 'states';
+
     $('.states').click(function() {
-        // TODO flag engine to grab words from the states word bank
+        sessionStorage.setItem('topic-flag', 'states');
         if (!ai) {
             location.href = 'game.html';
         } else {
@@ -34,7 +36,7 @@ $(function() {
     });
 
     $('.president').click(function() {
-        // TODO flag engine to grab words from presidents wordbank
+        sessionStorage.setItem('topic-flag', 'presidents');
         if (!ai) {
             location.href = 'game.html';
         } else {
@@ -43,7 +45,7 @@ $(function() {
     });
 
     $('.countries').click(function() {
-        // TODO flag engine to grab words from countries wordbank
+        sessionStorage.setItem('topic-flag', 'countries');
         if (!ai) {
             location.href = 'game.html';
         } else {
@@ -56,7 +58,7 @@ $(function() {
     });
 
     $('.play-custom').click(function() {
-        // TODO flag engine to grab words from the custom wordbank
+        sessionStorage.setItem('topic-flag', 'customWordBank');
         if (!ai) {
             location.href = 'game.html';
         } else {
@@ -97,23 +99,6 @@ $(function() {
     });
 
 
-    // TODO show the word to guess on the screen
-    var word = customWordBank[0];
-    for (var i = 0; i < word.length; i++) {
-        $('.word').append('-');
-    }
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////
-    /// HANGMAN GRAPHICS SECTION
-    ///////////////////////////////////////////////////////////////////////////////////////
-
-    // TODO change hangman graphic based on number of misses
-    var source = 'img/hangman-0.png';
-    var image = $('<img />', { src: source });
-    $('.hangman').append(image);
-
-
     ///////////////////////////////////////////////////////////////////////////////////////
     /// KEYBOARD DISPLAY SECTION by Sharynne Azhar
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -129,11 +114,120 @@ $(function() {
         $('.keyboard').append($('<li class=\"letters\"></li>').text(letters[i])); // create each individual key
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /// GAME ENGINE SECTION BY ZACK MRYYAN
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    var wordToGuess = '';
+    var lettersGuessed = [];
+    var letterInWord = '';
+    var letterLocation = '';
+    var wordBlank = [];
+    var score = 0;
+    var strikes = 0;
+
+    // Set default hangman graphic
+    var image = $('<img />', { src: 'img/hangman-0.png' });
+    $('.hangman').html(image);
+
+    if (topic !== 'customWordBank') { $('.topic').html(topic); }
+    else { $('.topic').html('CUSTOM'); }
+
     $('.letters').click(function() {
-        $(this).css('background-color', '#607D8B');
+        // disabled the button
+        $(this).addClass('disabled');
+
+        // push to the letters guessed array and display on screen
+        var letterClicked = $(this).html();
+        lettersGuessed.push(letterClicked);
         $('.guesses').text($('.guesses').html() + $(this).html());
+
+        // if the letter guessed is in the word then display on the screen
+        for (var i = 0; i < wordToGuess.length; i++) {
+            if (letterClicked === wordToGuess[i]) {
+                letterInWord = letterClicked;
+                letterLocation = i;
+                wordBlank[i] = letterClicked;
+                $('.word').html(wordBlank);
+            }
+        }
+
+        var search = wordBlank.join('').indexOf(letterClicked);
+        if (search === -1) {
+            strikes++;
+        }
+
+        // if player guess the word correctly, increment score and reset game
+        if (wordBlank.join('') === wordToGuess) {
+            score++;
+            $('.hangman').html(image);
+            $('.score').html('Score: ' + score);
+            $('.guesses').html('Guesses: ');
+            $('.letters').css('background-color', '#FF5722');
+
+            for (var i = 0; i < wordToGuess.length; i++) {
+                wordBlank[i] = ' ';
+            }
+
+            // get a new word for player to guess
+            wordToGuess = getRandomWord();
+            for (var i = 0; i < wordToGuess.length; i++) {
+                if (wordToGuess[i] === ' ') {
+                    wordBlank[i] = ' ';
+                } else {
+                    wordBlank[i] = '-';
+                }
+            }
+
+            $('.word').html(wordBlank);
+            strikes = 0;
+        }
+
+        if (strikes === 1) {
+            image = $('<img />', { src: 'img/hangman-1.png' });
+            $('.hangman').html(image);
+        } else if (strikes === 2) {
+            image = $('<img />', { src: 'img/hangman-2.png' });
+            $('.hangman').html(image);
+        } else if (strikes === 3) {
+            image = $('<img />', { src: 'img/hangman-3.png' });
+            $('.hangman').html(image);
+        } else if (strikes === 4) {
+            image = $('<img />', { src: 'img/hangman-4.png' });
+            $('.hangman').html(image);
+        } else if (strikes === 5) {
+            image = $('<img />', { src: 'img/hangman-5.png' });
+            $('.hangman').html(image);
+        } else if (strikes === 6) {
+            image = $('<img />', { src: 'img/hangman-6.png' });
+            $('.hangman').html(image);
+            alert("Game Over");
+            location.href = 'index.html';
+        }
+
+        $('.strikes').html("Lives Left: " + (6 - strikes));
     });
 
+    function getRandomWord() {
+        if (topic === 'states') { return states[Math.floor(Math.random()*(states.length))]; }
+        else if (topic === 'countries') { return countries[Math.floor(Math.random()*(countries.length))]; }
+        else if (topic === 'presidents') { return presidents[Math.floor(Math.random()*(presidents.length))]; }
+        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length))];; }
+    }
+
+    wordToGuess = getRandomWord();
+    for (var i = 0; i < wordToGuess.length; i++) {
+        if (wordToGuess[i] === ' ') {
+            wordBlank[i] = ' ';
+        } else {
+            wordBlank[i] = '-';
+        }
+    }
+
+    $('.word').append(wordBlank);
+    $('.score').html("Score: " + score);
+    $('.strikes').html("Lives Left: " + (6 - strikes));
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /// ROBOT AI SECTION by Denis Sehic
