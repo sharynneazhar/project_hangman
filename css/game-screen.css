@@ -18,7 +18,17 @@
     color: #607D8B;
 }
 
-.keyboard {
+.roboWord {
+    font-size: 10vh;
+}
+
+.roboGuesses {
+    margin-bottom: 10px;
+    font-size: 8vh;
+    color: #607D8B;
+}
+
+.keyboard-container {
     margin: 10px auto;
     width: 80%;
 }
@@ -60,11 +70,20 @@
         font-size: 5vh;
     }
 
-    .keyboard {
+    .roboWord {
+        font-size: 8vh;
+    }
+
+	.roboGuesses {
+		margin-bottom: 20px;
+		font-size: 5vh;
+	}
+
+    .keyboard-container {
         width: 100%;
     }
 
-    .keys {
+    .keyboard {
         padding: 0;
     }
 
