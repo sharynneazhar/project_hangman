@@ -213,7 +213,7 @@ $(function() {
         if (topic === 'states') { return states[Math.floor(Math.random()*(states.length))]; }
         else if (topic === 'countries') { return countries[Math.floor(Math.random()*(countries.length))]; }
         else if (topic === 'presidents') { return presidents[Math.floor(Math.random()*(presidents.length))]; }
-        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length))];; }
+        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length))]; }
     }
 
     wordToGuess = getRandomWord();
