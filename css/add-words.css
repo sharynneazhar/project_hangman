@@ -11,7 +11,7 @@
 }
 
 .input-group {
-    width: 50%;
+    width: 60%;
     margin: 15px auto;
 }
 
@@ -24,6 +24,11 @@
     padding-right: 30px;
 }
 
+.input-group input {
+    width: 40%;
+    margin-right: 15px;
+}
+
 .add-field {
     padding: 5px;
     width: 80%;
@@ -33,15 +38,32 @@
 }
 
 .add-btn {
-    background-color: #FF5722;
+    width: 10%;
+    background-color: #607D8B;
 }
 
 .add-btn button {
-    font-size: 24px;
+    font-size: 30px;
+}
+
+.delete-btn {
+    background-color: #FF5722;
+    width: 10%;
+}
+
+.delete-btn button {
+    font-size: 32px;
+}
+
+.delete-word {
+    font-weight: bolder;
+    color: #FF0000;
+    padding-right: 30px;
+    cursor: pointer;
 }
 
 .word-list {
-    width: 50%;
+    width: 35%;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
