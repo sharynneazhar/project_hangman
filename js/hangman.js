@@ -81,7 +81,6 @@ $(function() {
 
     $('.add-word').click(function(event) {
         event.preventDefault();
-
         var inputValue = $('input[name=word]').val(); // get the word from input field
         if (inputValue.length > 0) {
             customWordBank.push(inputValue); // push the word into the array
@@ -161,7 +160,7 @@ $(function() {
         // if player guess the word correctly, increment score and reset game
         if (wordBlank.join('') === wordToGuess) {
             score++;
-            $('.hangman').html(image);
+            $('.hangman').html($('<img />', { src: 'img/hangman-0.png' }));
             $('.score').html('Score: ' + score);
             $('.guesses').html('Guesses: ');
             $('.letters').removeClass('disabled');
