@@ -27,28 +27,28 @@ $(function() {
     $('.states').click(function() {
         // TODO flag engine to grab words from the states word bank
         if (!ai) {
-			location.href = 'game.html';
-		} else {
-			location.href = 'roboGame.html';
-		}
+            location.href = 'game.html';
+        } else {
+            location.href = 'roboGame.html';
+        }
     });
 
     $('.president').click(function() {
         // TODO flag engine to grab words from presidents wordbank
         if (!ai) {
-			location.href = 'game.html';
-		} else {
-			location.href = 'roboGame.html';
-		}
+            location.href = 'game.html';
+        } else {
+            location.href = 'roboGame.html';
+        }
     });
 
     $('.countries').click(function() {
         // TODO flag engine to grab words from countries wordbank
         if (!ai) {
-			location.href = 'game.html';
-		} else {
-			location.href = 'roboGame.html';
-		}
+            location.href = 'game.html';
+        } else {
+            location.href = 'roboGame.html';
+        }
     });
 
     $('.custom-topic').click(function() {
@@ -58,10 +58,10 @@ $(function() {
     $('.play-custom').click(function() {
         // TODO flag engine to grab words from the custom wordbank
         if (!ai) {
-			location.href = 'game.html';
-		} else {
-			location.href = 'roboGame.html';
-		}
+            location.href = 'game.html';
+        } else {
+            location.href = 'roboGame.html';
+        }
     });
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -89,9 +89,8 @@ $(function() {
     });
 
     $('.delete-word').click(function() {
-		$('.word-list li:last-child').remove();
-
-	});
+        $('.word-list li:last-child').remove();
+    });
 
     $('.delete-list').click(function() {
         $('.word-list').empty();
@@ -120,9 +119,9 @@ $(function() {
     ///////////////////////////////////////////////////////////////////////////////////////
 
     var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
-                   'h', 'i', 'j', 'k', 'l', 'm', 'n',
-                   'o', 'p', 'q', 'r', 's', 't', 'u',
-                   'v', 'w', 'x', 'y', 'z'];
+    'h', 'i', 'j', 'k', 'l', 'm', 'n',
+    'o', 'p', 'q', 'r', 's', 't', 'u',
+    'v', 'w', 'x', 'y', 'z'];
 
     $('.keyboard-container').append('<ul class=\"keyboard\"></ul>'); // create the keyboard
 
@@ -140,35 +139,35 @@ $(function() {
     /// ROBOT AI SECTION by Denis Sehic
     ///////////////////////////////////////////////////////////////////////////////////////
 
-	var rGuessArr = [];
-	var totalRoboMisses = 0;
+    var rGuessArr = [];
+    var totalRoboMisses = 0;
 
-	function isInArray(value, array) {
-		return array.indexOf(value) > -1;
-	}
+    function isInArray(value, array) {
+        return array.indexOf(value) > -1;
+    }
 
-	function randomLetter() {
-		return letters[Math.floor(Math.random() * letters.length)];
-	}
+    function randomLetter() {
+        return letters[Math.floor(Math.random() * letters.length)];
+    }
 
-	$('.letters').click(function() {
-		//Robo AI
-		var roboGuess = randomLetter(); //generate random letter
-		while(isInArray(roboGuess, rGuessArr)) { //checks if letter has already been guessed
-			roboGuess = randomLetter(); //if so find another letter
-		}
+    $('.letters').click(function() {
+        //Robo AI
+        var roboGuess = randomLetter(); //generate random letter
+        while(isInArray(roboGuess, rGuessArr)) { //checks if letter has already been guessed
+            roboGuess = randomLetter(); //if so find another letter
+        }
 
-		rGuessArr.push(roboGuess); //add letter to an array
-		//If guess deems that the guessed letter isn't in the word,
-		//add to missed guesses
-		if(totalRoboMisses < 6) { //if maximum alloted misses not reached
-			$('.roboGuesses').text($('.roboGuesses').html() + roboGuess);
-			//if(guessChecker(roboGuess, word) == true)
-			//else
-			totalRoboMisses++;
-		} else {
-			$('.roboGuesses').text("The Robot Lost");
-		}
+        rGuessArr.push(roboGuess); //add letter to an array
+        //If guess deems that the guessed letter isn't in the word,
+        //add to missed guesses
+        if(totalRoboMisses < 6) { //if maximum alloted misses not reached
+            $('.roboGuesses').text($('.roboGuesses').html() + roboGuess);
+            //if(guessChecker(roboGuess, word) == true)
+            //else
+            totalRoboMisses++;
+        } else {
+            $('.roboGuesses').text("The Robot Lost");
+        }
     });
 
 });
