@@ -156,7 +156,7 @@ $(function() {
         if (topic === 'states') { return states[Math.floor(Math.random()*(states.length))]; }
         else if (topic === 'countries') { return countries[Math.floor(Math.random()*(countries.length))]; }
         else if (topic === 'presidents') { return presidents[Math.floor(Math.random()*(presidents.length))]; }
-        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length - 1))]; }
+        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length - 1))]; } // length-1 because the text file has a space at the end
     }
 
     // get a random word to guess
