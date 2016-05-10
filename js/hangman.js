@@ -70,7 +70,7 @@ $(function() {
     /// CUSTOM WORD BANK SECTION by Levi Clark
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    var customWordBank = ['cat'];
+    var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
 
     // allow enter key to work when adding a word
     $('input[name=word]').keyup(function(event){
@@ -81,12 +81,23 @@ $(function() {
 
     $('.add-word').click(function(event) {
         event.preventDefault();
-        var inputValue = $('input[name=word]').val(); // get the word from input field
+
+        // get the word from input field
+        var inputValue = $('input[name=word]').val();
+        var data = { word: inputValue };
+
+        // save to the text file
+        var jqxhr = $.post('wordbank.php', data, function(dataFromServer) {
+            console.log('successfully added to word bank: ' + dataFromServer);
+        });
+
         if (inputValue.length > 0) {
-            customWordBank.push(inputValue); // push the word into the array
-            $('.word-list').prepend('<li class=\"list-group-item new-word\">' + inputValue + '</li>'); // add the word to the display screen
+            // add the word to the display screen
+            $('.word-list').prepend('<li class=\"list-group-item new-word\">' + inputValue + '</li>');
         }
-        $('input[name=word]').val(''); // clear input field
+
+        // clear input field
+        $('input[name=word]').val('');
     });
 
     $('.delete-word').click(function() {
@@ -103,9 +114,9 @@ $(function() {
     ///////////////////////////////////////////////////////////////////////////////////////
 
     var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
-    'h', 'i', 'j', 'k', 'l', 'm', 'n',
-    'o', 'p', 'q', 'r', 's', 't', 'u',
-    'v', 'w', 'x', 'y', 'z'];
+                   'h', 'i', 'j', 'k', 'l', 'm', 'n',
+                   'o', 'p', 'q', 'r', 's', 't', 'u',
+                   'v', 'w', 'x', 'y', 'z'];
 
     $('.keyboard-container').append('<ul class=\"keyboard\"></ul>'); // create the keyboard
 
@@ -119,10 +130,7 @@ $(function() {
     ///////////////////////////////////////////////////////////////////////////////////////
 
     var wordToGuess = '';
-    var lettersGuessed = [];
-    var letterInWord = '';
-    var letterLocation = '';
-    var wordBlank = [];
+    var blankSpaces = [];
     var score = 0;
     var strikes = 0;
 
@@ -130,57 +138,65 @@ $(function() {
     var image = $('<img />', { src: 'img/hangman-0.png' });
     $('.hangman').html(image);
 
+    // display topic chosen on screen
     if (topic !== 'customWordBank') { $('.topic').html(topic); }
     else { $('.topic').html('CUSTOM'); }
 
+    // returns a random word from topic list
+    function getRandomWord() {
+
+        // get words from file
+        $.get('customWordBank.txt', function(data) {
+            customWordBank = data.split(',');
+
+            // need to store in session or else the data is lost on refresh
+            sessionStorage.setItem('customWordBank', JSON.stringify(customWordBank));
+        });
+
+        if (topic === 'states') { return states[Math.floor(Math.random()*(states.length))]; }
+        else if (topic === 'countries') { return countries[Math.floor(Math.random()*(countries.length))]; }
+        else if (topic === 'presidents') { return presidents[Math.floor(Math.random()*(presidents.length))]; }
+        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length - 1))]; }
+    }
+
+    // get a random word to guess
+    wordToGuess = getRandomWord();
+
+    // hide the letters with a hyphen
+    // if there are 2+ words, keep spaces in
+    if (wordToGuess) {
+        for (var i = 0; i < wordToGuess.length; i++) {
+            if (wordToGuess[i] === ' ') {
+                blankSpaces[i] = ' ';
+            } else {
+                blankSpaces[i] = '-';
+            }
+        }
+    }
+
+    $('.word').append(blankSpaces);
+    $('.score').html("Score: " + score);
+    $('.strikes').html("Lives Left: " + (6 - strikes));
+
     $('.letters').click(function() {
-        // disabled the button
+        // disable the button after click
         $(this).addClass('disabled');
 
         // push to the letters guessed array and display on screen
         var letterClicked = $(this).html();
-        lettersGuessed.push(letterClicked);
         $('.guesses').text($('.guesses').html() + letterClicked);
 
         // if the letter guessed is in the word then display on the screen
         for (var i = 0; i < wordToGuess.length; i++) {
             if (letterClicked === wordToGuess[i]) {
-                letterInWord = letterClicked;
-                letterLocation = i;
-                wordBlank[i] = letterClicked;
-                $('.word').html(wordBlank);
+                blankSpaces[i] = letterClicked;
             }
+            $('.word').html(blankSpaces);
         }
 
-        var search = wordBlank.join('').indexOf(letterClicked);
+        var search = blankSpaces.join('').indexOf(letterClicked);
         if (search === -1) {
             strikes++;
-        }
-
-        // if player guess the word correctly, increment score and reset game
-        if (wordBlank.join('') === wordToGuess) {
-            score++;
-            $('.hangman').html($('<img />', { src: 'img/hangman-0.png' }));
-            $('.score').html('Score: ' + score);
-            $('.guesses').html('Guesses: ');
-            $('.letters').removeClass('disabled');
-
-            for (var i = 0; i < wordToGuess.length; i++) {
-                wordBlank[i] = ' ';
-            }
-
-            // get a new word for player to guess
-            wordToGuess = getRandomWord();
-            for (var i = 0; i < wordToGuess.length; i++) {
-                if (wordToGuess[i] === ' ') {
-                    wordBlank[i] = ' ';
-                } else {
-                    wordBlank[i] = '-';
-                }
-            }
-
-            $('.word').html(wordBlank);
-            strikes = 0;
         }
 
         if (strikes === 1) {
@@ -206,61 +222,71 @@ $(function() {
         }
 
         $('.strikes').html("Lives Left: " + (6 - strikes));
+
+        // if player guess the word correctly, increment score and reset game
+        if (blankSpaces.join('') === wordToGuess) {
+            score++;
+            strikes = 0;
+
+            $('.hangman').html($('<img />', { src: 'img/hangman-0.png' }));
+            $('.score').html('Score: ' + score);
+            $('.guesses').html('Guesses: ');
+            $('.letters').removeClass('disabled');
+
+            // clear previous word
+            blankSpaces = [];
+
+            // get a new word for player to guess
+            wordToGuess = getRandomWord();
+            for (var i = 0; i < wordToGuess.length; i++) {
+                if (wordToGuess[i] === ' ') {
+                    blankSpaces[i] = ' ';
+                } else {
+                    blankSpaces[i] = '-';
+                }
+            }
+
+            // update the screen
+            $('.word').html(blankSpaces);
+        }
+
     });
 
-    function getRandomWord() {
-        if (topic === 'states') { return states[Math.floor(Math.random()*(states.length))]; }
-        else if (topic === 'countries') { return countries[Math.floor(Math.random()*(countries.length))]; }
-        else if (topic === 'presidents') { return presidents[Math.floor(Math.random()*(presidents.length))]; }
-        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length))]; }
-    }
-
-    wordToGuess = getRandomWord();
-    for (var i = 0; i < wordToGuess.length; i++) {
-        if (wordToGuess[i] === ' ') {
-            wordBlank[i] = ' ';
-        } else {
-            wordBlank[i] = '-';
-        }
-    }
-
-    $('.word').append(wordBlank);
-    $('.score').html("Score: " + score);
-    $('.strikes').html("Lives Left: " + (6 - strikes));
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /// ROBOT AI SECTION by Denis Sehic
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    var rGuessArr = [];
-    var totalRoboMisses = 0;
+    if (sessionStorage.getItem('ai-flag')) {
+        var rGuessArr = [];
+        var totalRoboMisses = 0;
 
-    function isInArray(value, array) {
-        return array.indexOf(value) > -1;
-    }
-
-    function randomLetter() {
-        return letters[Math.floor(Math.random() * letters.length)];
-    }
-
-    $('.letters').click(function() {
-        //Robo AI
-        var roboGuess = randomLetter(); //generate random letter
-        while(isInArray(roboGuess, rGuessArr)) { //checks if letter has already been guessed
-            roboGuess = randomLetter(); //if so find another letter
+        function isInArray(value, array) {
+            return array.indexOf(value) > -1;
         }
 
-        rGuessArr.push(roboGuess); //add letter to an array
-        //If guess deems that the guessed letter isn't in the word,
-        //add to missed guesses
-        if(totalRoboMisses < 6) { //if maximum alloted misses not reached
-            $('.roboGuesses').text($('.roboGuesses').html() + roboGuess);
-            //if(guessChecker(roboGuess, word) == true)
-            //else
-            totalRoboMisses++;
-        } else {
-            $('.roboGuesses').text("The Robot Lost");
+        function randomLetter() {
+            return letters[Math.floor(Math.random() * letters.length)];
         }
-    });
+
+        $('.letters').click(function() {
+            //Robo AI
+            var roboGuess = randomLetter(); //generate random letter
+            while (isInArray(roboGuess, rGuessArr)) { //checks if letter has already been guessed
+                roboGuess = randomLetter(); //if so find another letter
+            }
+
+            rGuessArr.push(roboGuess); //add letter to an array
+            //If guess deems that the guessed letter isn't in the word,
+            //add to missed guesses
+            if (totalRoboMisses < 6) { //if maximum alloted misses not reached
+                $('.roboGuesses').text($('.roboGuesses').html() + roboGuess);
+                totalRoboMisses++;
+            } else {
+                $('.roboGuesses').text("The Robot Lost");
+                rGuessArr = [];
+            }
+        });
+    }
 
 });
