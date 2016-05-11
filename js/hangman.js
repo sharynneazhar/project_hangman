@@ -13,7 +13,7 @@ $(function() {
         $.ajax({
             url: 'clearWordBank.php',
             success: function(response) {
-                alert('Cleared file!');
+                console.log('Cleared file!');
             }
         });
     }
@@ -93,20 +93,13 @@ $(function() {
         location.href = 'add-words.html';
     });
 
-    $('.play-custom').click(function() {
-        sessionStorage.setItem('topic-flag', 'customWordBank');
-        if (!ai) {
-            location.href = 'game.html';
-        } else {
-            location.href = 'roboGame.html';
-        }
-    });
-
     ///////////////////////////////////////////////////////////////////////////////////////
     /// CUSTOM WORD BANK SECTION by Levi Clark
     ///////////////////////////////////////////////////////////////////////////////////////
 
     var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
+
+    $('.add-field').focus();
 
     // allow enter key to work when adding a word
     $('input[name=word]').keyup(function(event) {
@@ -125,7 +118,7 @@ $(function() {
         };
 
         // save to the text file
-        var jqxhr = $.post('wordbank.php', data, function(dataFromServer) {
+        var addWord = $.post('wordbank.php', data, function(dataFromServer) {
             console.log('successfully added to word bank: ' + dataFromServer);
         });
 
@@ -152,7 +145,6 @@ $(function() {
             // need to store in session or else the data is lost on refresh
             sessionStorage.setItem('customWordBank', JSON.stringify(dataHold));
         });
-
 
         if (customWordBank.length > 0) {
             sessionStorage.setItem('topic-flag', 'customWordBank');

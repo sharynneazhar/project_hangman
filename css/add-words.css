@@ -43,7 +43,7 @@
 }
 
 .add-btn button {
-    font-size: 30px;
+    font-size: 30px !important;
 }
 
 .delete-btn {
@@ -52,7 +52,7 @@
 }
 
 .delete-btn button {
-    font-size: 32px;
+    font-size: 30px !important;
 }
 
 .delete-word {

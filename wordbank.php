@@ -16,7 +16,7 @@
 
     // write to file
     $filename = "customWordBank.txt";
-    $file = fopen($filename, 'a');
+    $file = fopen($filename, 'a+');
     fwrite($file, $word . ',');
     fclose($file);
 
