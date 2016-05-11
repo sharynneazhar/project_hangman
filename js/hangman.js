@@ -2,6 +2,7 @@ $(function() {
 
     // session storage allow the value of this flag to be preserve when routing to next page or on reload
     var ai = sessionStorage.getItem('ai-flag') || false;
+    var onCustomPage = sessionStorage.getItem('onCustomPage-flag') || false;
 
     // general button handling
     $('.play').click(function() {
@@ -9,15 +10,22 @@ $(function() {
     });
 
     $('.back').click(function() {
+        parent.history.back();
+		return false;
+    });
+
+    $('.done').click(function() {
         sessionStorage.clear(); // clear session storage when route back to home
 
         // clear the custom word bank file
-        $.ajax({
-           url: 'clearFile.php',
-           success: function (response) {
-             alert(response);
-           }
-        });
+        if (onCustomPage) {
+            $.ajax({
+               url: 'clearFile.php',
+               success: function (response) {
+                 alert(response);
+               }
+            });
+        }
 
         location.href = 'index.html';
     });
@@ -63,6 +71,7 @@ $(function() {
 
     $('.custom-topic').click(function() {
         console.log('Player chose to add custom word bank');
+        sessionStorage.setItem('onCustomPage-flag', true);
         location.href = 'add-words.html';
     });
 
