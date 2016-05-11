@@ -21,4 +21,5 @@
     fclose($file);
 
 	echo $word;
+
 ?>

@@ -38,7 +38,7 @@
 }
 
 .add-btn {
-    width: 15%;
+    width: 10%;
     background-color: #607D8B;
 }
 
@@ -48,7 +48,7 @@
 
 .delete-btn {
     background-color: #FF5722;
-    width: 15%;
+    width: 10%;
 }
 
 .delete-btn button {

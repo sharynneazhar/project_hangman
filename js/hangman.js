@@ -94,6 +94,15 @@ $(function() {
         location.href = 'add-words.html';
     });
 
+    $('.play-custom').click(function() {
+        sessionStorage.setItem('topic-flag', 'customWordBank');
+        if (!ai) {
+            location.href = 'game.html';
+        } else {
+            location.href = 'roboGame.html';
+        }
+    });
+
     ///////////////////////////////////////////////////////////////////////////////////////
     /// CUSTOM WORD BANK SECTION by Levi Clark
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -223,11 +232,13 @@ $(function() {
 
     // hide the letters with a hyphen
     // if there are 2+ words, keep spaces in
-    for (var i = 0; i < wordToGuess.length; i++) {
-        if (wordToGuess[i] === ' ') {
-            blankSpaces[i] = ' ';
-        } else {
-            blankSpaces[i] = '-';
+    if (wordToGuess) {
+        for (var i = 0; i < wordToGuess.length; i++) {
+            if (wordToGuess[i] === ' ') {
+                blankSpaces[i] = ' ';
+            } else {
+                blankSpaces[i] = '-';
+            }
         }
     }
 
