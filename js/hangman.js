@@ -8,18 +8,24 @@ $(function() {
     var ai = sessionStorage.getItem('ai-flag') || false;
     var onCustomPage = sessionStorage.getItem('onCustomPage-flag') || false;
 
+    function clearCustomWordBank() {
+        customWordBank = [];
+
+        $.ajax({
+            url: 'clearFile.php',
+            success: function(response) {
+                console.log(response);
+            }
+        });
+    }
+
     function gameOver() {
         // clear session storage
         sessionStorage.clear();
 
         // clear the custom word bank file
         if (onCustomPage) {
-            $.ajax({
-                url: 'clearFile.php',
-                success: function(response) {
-                    alert(response);
-                }
-            });
+            clearCustomWordBank();
         }
 
         location.href = 'index.html';
@@ -94,6 +100,8 @@ $(function() {
 
     var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
 
+    $('.add-field').focus();
+
     // allow enter key to work when adding a word
     $('input[name=word]').keyup(function(event) {
         if (event.keyCode == 13) {
@@ -126,10 +134,11 @@ $(function() {
     });
 
     $('.delete-word').click(function() {
-        $('.word-list li:last-child').remove();
+        $('.word-list li:first-child').remove();
     });
 
     $('.delete-list').click(function() {
+        clearCustomWordBank();
         $('.word-list').empty();
     });
 
@@ -142,14 +151,12 @@ $(function() {
             sessionStorage.setItem('customWordBank', JSON.stringify(dataHold));
         });
 
-        console.log(customWordBank);
 
         if (customWordBank.length > 0) {
             sessionStorage.setItem('topic-flag', 'customWordBank');
             goToGame();
         } else {
             alert('Word bank empty: Please add some words first!');
-            location.reload();
         }
     });
 
