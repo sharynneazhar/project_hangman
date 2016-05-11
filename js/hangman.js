@@ -1,8 +1,29 @@
 $(function() {
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /// GENERAL BUTTON HANDLING BY SHARYNNE AZHAR
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     // session storage allow the value of this flag to be preserve when routing to next page or on reload
     var ai = sessionStorage.getItem('ai-flag') || false;
     var onCustomPage = sessionStorage.getItem('onCustomPage-flag') || false;
+
+    function gameOver() {
+        // clear session storage
+        sessionStorage.clear();
+
+        // clear the custom word bank file
+        if (onCustomPage) {
+            $.ajax({
+                url: 'clearFile.php',
+                success: function(response) {
+                    alert(response);
+                }
+            });
+        }
+
+        location.href = 'index.html';
+    }
 
     // general button handling
     $('.play').click(function() {
@@ -10,29 +31,21 @@ $(function() {
     });
 
     $('.back').click(function() {
+        if (onCustomPage) {
+            sessionStorage.removeItem('onCustomPage-flag');
+        }
+
         parent.history.back();
-		return false;
+        return false;
     });
 
     $('.done').click(function() {
-        sessionStorage.clear(); // clear session storage when route back to home
-
-        // clear the custom word bank file
-        if (onCustomPage) {
-            $.ajax({
-               url: 'clearFile.php',
-               success: function (response) {
-                 alert(response);
-               }
-            });
-        }
-
-        location.href = 'index.html';
+        gameOver();
     });
 
     $('.mode').click(function() {
         ai = !ai;
-        console.log("AI: " + !ai);
+        console.log("AI: " + ai);
         sessionStorage.setItem('ai-flag', ai);
         $(this).text(function(i, text) {
             return text === 'Select Mode: AI' ? 'Select Mode: 1P' : 'Select Mode: AI';
@@ -82,7 +95,7 @@ $(function() {
     var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
 
     // allow enter key to work when adding a word
-    $('input[name=word]').keyup(function(event){
+    $('input[name=word]').keyup(function(event) {
         if (event.keyCode == 13) {
             $('.add-word').click();
         }
@@ -93,7 +106,9 @@ $(function() {
 
         // get the word from input field
         var inputValue = $('input[name=word]').val();
-        var data = { word: inputValue };
+        var data = {
+            word: inputValue
+        };
 
         // save to the text file
         var jqxhr = $.post('wordbank.php', data, function(dataFromServer) {
@@ -119,11 +134,21 @@ $(function() {
     });
 
     $('.play-custom').click(function() {
-        if (customWordBank.length > 1) {
+        // get words from file
+        $.get('customWordBank.txt', function(data) {
+            var dataHold = data.split(',');
+            dataHold.pop(); // removing whitespace item at the end;
+            // need to store in session or else the data is lost on refresh
+            sessionStorage.setItem('customWordBank', JSON.stringify(dataHold));
+        });
+
+        console.log(customWordBank);
+
+        if (customWordBank.length > 0) {
             sessionStorage.setItem('topic-flag', 'customWordBank');
             goToGame();
         } else {
-            alert('Please add some words first!');
+            alert('Word bank empty: Please add some words first!');
             location.reload();
         }
     });
@@ -133,15 +158,19 @@ $(function() {
     /// KEYBOARD DISPLAY SECTION by Sharynne Azhar
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g',
-                   'h', 'i', 'j', 'k', 'l', 'm', 'n',
-                   'o', 'p', 'q', 'r', 's', 't', 'u',
-                   'v', 'w', 'x', 'y', 'z'];
+    var letters = [
+        'a', 'b', 'c', 'd', 'e', 'f', 'g',
+        'h', 'i', 'j', 'k', 'l', 'm', 'n',
+        'o', 'p', 'q', 'r', 's', 't', 'u',
+        'v', 'w', 'x', 'y', 'z'
+    ];
 
-    $('.keyboard-container').append('<ul class=\"keyboard\"></ul>'); // create the keyboard
+    // create the keyboard area
+    $('.keyboard-container').append('<ul class=\"keyboard\"></ul>');
 
     for (var i = 0; i < letters.length; i++) {
-        $('.keyboard').append($('<li class=\"letters\"></li>').text(letters[i])); // create each individual key
+        // create each individual key
+        $('.keyboard').append($('<li class=\"letters\"></li>').text(letters[i]));
     }
 
 
@@ -155,28 +184,31 @@ $(function() {
     var strikes = 0;
 
     // Set default hangman graphic
-    var image = $('<img />', { src: 'img/hangman-0.png' });
+    var image = $('<img />', {
+        src: 'img/hangman-0.png'
+    });
+
     $('.hangman').html(image);
 
     // display topic chosen on screen
-    if (topic !== 'customWordBank') { $('.topic').html(topic); }
-    else { $('.topic').html('CUSTOM'); }
+    if (topic !== 'customWordBank') {
+        $('.topic').html(topic);
+    } else {
+        $('.topic').html('CUSTOM');
+    }
 
     // returns a random word from topic list
     function getRandomWord() {
-
-        // get words from file
-        $.get('customWordBank.txt', function(data) {
-            customWordBank = data.split(',');
-            // need to store in session or else the data is lost on refresh
-            customWordBank.pop();
-            sessionStorage.setItem('customWordBank', JSON.stringify(customWordBank));
-        });
-
-        if (topic === 'states') { return states[Math.floor(Math.random()*(states.length))]; }
-        else if (topic === 'countries') { return countries[Math.floor(Math.random()*(countries.length))]; }
-        else if (topic === 'presidents') { return presidents[Math.floor(Math.random()*(presidents.length))]; }
-        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length))]; } // length-1 because the text file has a space at the end
+        if (topic === 'states') {
+            return states[Math.floor(Math.random() * (states.length))];
+        } else if (topic === 'countries') {
+            return countries[Math.floor(Math.random() * (countries.length))];
+        } else if (topic === 'presidents') {
+            return presidents[Math.floor(Math.random() * (presidents.length))];
+        } else {
+            // length-1 because the text file has a space at the end
+            return customWordBank[Math.floor(Math.random() * (customWordBank.length))];
+        }
     }
 
     // get a random word to guess
@@ -218,25 +250,33 @@ $(function() {
         }
 
         if (strikes === 1) {
-            image = $('<img />', { src: 'img/hangman-1.png' });
+            image = $('<img />', {
+                src: 'img/hangman-1.png'
+            });
             $('.hangman').html(image);
         } else if (strikes === 2) {
-            image = $('<img />', { src: 'img/hangman-2.png' });
+            image = $('<img />', {
+                src: 'img/hangman-2.png'
+            });
             $('.hangman').html(image);
         } else if (strikes === 3) {
-            image = $('<img />', { src: 'img/hangman-3.png' });
+            image = $('<img />', {
+                src: 'img/hangman-3.png'
+            });
             $('.hangman').html(image);
         } else if (strikes === 4) {
-            image = $('<img />', { src: 'img/hangman-4.png' });
+            image = $('<img />', {
+                src: 'img/hangman-4.png'
+            });
             $('.hangman').html(image);
         } else if (strikes === 5) {
-            image = $('<img />', { src: 'img/hangman-5.png' });
+            image = $('<img />', {
+                src: 'img/hangman-5.png'
+            });
             $('.hangman').html(image);
         } else if (strikes === 6) {
-            image = $('<img />', { src: 'img/hangman-6.png' });
-            $('.hangman').html(image);
             alert("Game Over");
-            location.href = 'index.html';
+            gameOver();
         }
 
         $('.strikes').html("Lives Left: " + (6 - strikes));
@@ -246,7 +286,10 @@ $(function() {
             score++;
             strikes = 0;
 
-            $('.hangman').html($('<img />', { src: 'img/hangman-0.png' }));
+            $('.hangman').html($('<img />', {
+                src: 'img/hangman-0.png'
+            }));
+
             $('.score').html('Score: ' + score);
             $('.guesses').html('Guesses: ');
             $('.letters').removeClass('disabled');
@@ -256,8 +299,8 @@ $(function() {
 
             // clear robot variables
             rGuessArr = [];
-      			roboWord = [];
-      			roboFlag = true;
+            roboWord = [];
+            roboFlag = true;
 
             // get a new word for player to guess
             wordToGuess = getRandomWord();
@@ -310,11 +353,15 @@ $(function() {
         $('.roboSpace').append(roboSpaces);
 
         $('.letters').click(function() {
+            // disable the button after click
+            $(this).addClass('disabled');
+
             //Robo AI
             var roboGuess = randomLetter(); //generate random letter
             while (isInArray(roboGuess, rGuessArr)) { //checks if letter has already been guessed
                 roboGuess = randomLetter(); //if so find another letter
             }
+
             rGuessArr.push(roboGuess); //add letter to an array
 
             //If the random letter is in the word then
@@ -327,12 +374,13 @@ $(function() {
                     roboWord[i] = roboGuess;
                     found = true;
                 }
+
                 $('.roboSpace').html(roboSpaces);
             }
 
             //In order to level the playing field more
             //the robot gets another attempt
-            if(!found){
+            if (!found) {
                 while (isInArray(roboGuess, rGuessArr)) {
                     roboGuess = randomLetter();
                 }
@@ -349,12 +397,11 @@ $(function() {
                 }
             }
 
-            //If correct guesses is equal to the word length
-            //then the robot won
-            if (roboWord.join('') === wordToGuess){
-                $('.roboGuesses').text("The Robot won");
+            // If correct guesses is equal to the word length
+            // then the robot won
+            if (roboWord.join('') === wordToGuess) {
                 alert("The Robot beat you :(");
-                location.href = 'index.html';
+                gameOver();
             } else if (roboFlag) {
                 roboSpaces = [];
                 for (var i = 0; i < wordToGuess.length; i++) {
@@ -364,10 +411,13 @@ $(function() {
                         roboSpaces[i] = '-';
                     }
                 }
+
+                $('.letters').removeClass('disabled');
+
                 roboFlag = false;
                 $('.roboSpace').html(roboSpaces);
             } else {
-                $('.roboGuesses').text("Robot's Guesses:");
+                $('.roboGuesses').text("Robot's Guesses: Shhh");
             }
         });
     }

@@ -14,37 +14,39 @@
 }
 
 .word {
+    margin-top: 20px;
     font-size: 10vh;
 }
 
 .guesses {
+    margin-bottom: 30px;
+    font-size: 5vh;
+    color: #607D8B;
+}
+
+
+.roboSpace {
+    margin-top: 20px;
+    font-size: 10vh;
+}
+
+.roboGuesses {
     margin-bottom: 20px;
-    font-size: 8vh;
+    font-size: 5vh;
     color: #607D8B;
 }
 
 .score {
     display: inline-block;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     margin-right: 60px;
-    font-size: 5vh;
+    font-size: 5.5vh;
     color: #607D8B;
 }
 
 .strikes {
     display: inline-block;
-    font-size: 5vh;
-    color: #607D8B;
-}
-
-.roboSpace {
-    margin-bottom: 2px;
-    font-size: 8vh;
-}
-
-.roboGuesses {
-    margin-bottom: 10px;
-    font-size: 8vh;
+    font-size: 5.5vh;
     color: #607D8B;
 }
 
@@ -89,6 +91,15 @@
         font-size: 5vh;
     }
 
+    .roboSpace {
+        font-size: 8vh;
+    }
+
+    .roboGuesses {
+        margin-bottom: 10px;
+        font-size: 5vh;
+    }
+
     .score {
         display: block;
         margin-bottom: 10px;
@@ -100,16 +111,6 @@
         margin-bottom: 10px;
         font-size: 3vh;
     }
-
-    .roboSpace {
-	    margin-bottom: 15px;
-        font-size: 15vh;
-    }
-
-	.roboGuesses {
-		margin-bottom: 20px;
-		font-size: 5vh;
-	}
 
     .keyboard-container {
         width: 100%;
