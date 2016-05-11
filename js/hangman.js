@@ -10,11 +10,10 @@ $(function() {
 
     function clearCustomWordBank() {
         customWordBank = [];
-
         $.ajax({
-            url: 'clearFile.php',
+            url: 'clearWordBank.php',
             success: function(response) {
-                console.log(response);
+                alert('Cleared file!');
             }
         });
     }
@@ -138,10 +137,6 @@ $(function() {
 
         // clear input field
         $('input[name=word]').val('');
-    });
-
-    $('.delete-word').click(function() {
-        $('.word-list li:first-child').remove();
     });
 
     $('.delete-list').click(function() {
