@@ -109,8 +109,6 @@ $(function() {
 
     var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
 
-    $('.add-field').focus();
-
     // allow enter key to work when adding a word
     $('input[name=word]').keyup(function(event) {
         if (event.keyCode == 13) {
