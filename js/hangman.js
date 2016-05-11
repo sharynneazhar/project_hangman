@@ -57,20 +57,23 @@ $(function() {
         location.href = 'add-words.html';
     });
 
-    $('.play-custom').click(function() {
-        sessionStorage.setItem('topic-flag', 'customWordBank');
-        if (!ai) {
-            location.href = 'game.html';
-        } else {
-            location.href = 'roboGame.html';
-        }
-    });
-
     ///////////////////////////////////////////////////////////////////////////////////////
     /// CUSTOM WORD BANK SECTION by Levi Clark
     ///////////////////////////////////////////////////////////////////////////////////////
 
     var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
+
+    $('.play-custom').addClass('disabled');
+    if (customWordBank !== undefined) {
+        $('.play-custom').removeClass('disabled').click(function() {
+            sessionStorage.setItem('topic-flag', 'customWordBank');
+            if (!ai) {
+                location.href = 'game.html';
+            } else {
+                location.href = 'roboGame.html';
+            }
+        });
+    }
 
     // allow enter key to work when adding a word
     $('input[name=word]').keyup(function(event){
@@ -164,13 +167,11 @@ $(function() {
 
     // hide the letters with a hyphen
     // if there are 2+ words, keep spaces in
-    if (wordToGuess) {
-        for (var i = 0; i < wordToGuess.length; i++) {
-            if (wordToGuess[i] === ' ') {
-                blankSpaces[i] = ' ';
-            } else {
-                blankSpaces[i] = '-';
-            }
+    for (var i = 0; i < wordToGuess.length; i++) {
+        if (wordToGuess[i] === ' ') {
+            blankSpaces[i] = ' ';
+        } else {
+            blankSpaces[i] = '-';
         }
     }
 
