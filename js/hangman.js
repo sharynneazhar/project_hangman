@@ -10,13 +10,22 @@ $(function() {
 
     $('.back').click(function() {
         sessionStorage.clear(); // clear session storage when route back to home
+
+        // clear the custom word bank file
+        $.ajax({
+           url: 'clearFile.php',
+           success: function (response) {
+             alert(response);
+           }
+        });
+
         location.href = 'index.html';
     });
 
     $('.mode').click(function() {
         ai = !ai;
+        console.log("AI: " + !ai);
         sessionStorage.setItem('ai-flag', ai);
-
         $(this).text(function(i, text) {
             return text === 'Select Mode: AI' ? 'Select Mode: 1P' : 'Select Mode: AI';
         });
@@ -26,34 +35,34 @@ $(function() {
     // button handling for topic pick
     var topic = sessionStorage.getItem('topic-flag') || 'states';
 
-    $('.states').click(function() {
-        sessionStorage.setItem('topic-flag', 'states');
+    function goToGame() {
         if (!ai) {
             location.href = 'game.html';
         } else {
             location.href = 'roboGame.html';
         }
+    }
+
+    $('.states').click(function() {
+        console.log('Player chose states');
+        sessionStorage.setItem('topic-flag', 'states');
+        goToGame();
     });
 
     $('.president').click(function() {
+        console.log('Player chose presidents');
         sessionStorage.setItem('topic-flag', 'presidents');
-        if (!ai) {
-            location.href = 'game.html';
-        } else {
-            location.href = 'roboGame.html';
-        }
+        goToGame();
     });
 
     $('.countries').click(function() {
+        console.log('Player chose countries');
         sessionStorage.setItem('topic-flag', 'countries');
-        if (!ai) {
-            location.href = 'game.html';
-        } else {
-            location.href = 'roboGame.html';
-        }
+        goToGame();
     });
 
     $('.custom-topic').click(function() {
+        console.log('Player chose to add custom word bank');
         location.href = 'add-words.html';
     });
 
@@ -62,18 +71,6 @@ $(function() {
     ///////////////////////////////////////////////////////////////////////////////////////
 
     var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
-
-    $('.play-custom').addClass('disabled');
-    if (customWordBank !== undefined) {
-        $('.play-custom').removeClass('disabled').click(function() {
-            sessionStorage.setItem('topic-flag', 'customWordBank');
-            if (!ai) {
-                location.href = 'game.html';
-            } else {
-                location.href = 'roboGame.html';
-            }
-        });
-    }
 
     // allow enter key to work when adding a word
     $('input[name=word]').keyup(function(event){
@@ -95,7 +92,8 @@ $(function() {
         });
 
         if (inputValue.length > 0) {
-            // add the word to the display screen
+            // add the word to the list and the display screen
+            customWordBank.unshift(inputValue);
             $('.word-list').prepend('<li class=\"list-group-item new-word\">' + inputValue + '</li>');
         }
 
@@ -109,6 +107,16 @@ $(function() {
 
     $('.delete-list').click(function() {
         $('.word-list').empty();
+    });
+
+    $('.play-custom').click(function() {
+        if (customWordBank.length > 1) {
+            sessionStorage.setItem('topic-flag', 'customWordBank');
+            goToGame();
+        } else {
+            alert('Please add some words first!');
+            location.reload();
+        }
     });
 
 
@@ -151,15 +159,15 @@ $(function() {
         // get words from file
         $.get('customWordBank.txt', function(data) {
             customWordBank = data.split(',');
-
             // need to store in session or else the data is lost on refresh
+            customWordBank.pop();
             sessionStorage.setItem('customWordBank', JSON.stringify(customWordBank));
         });
 
         if (topic === 'states') { return states[Math.floor(Math.random()*(states.length))]; }
         else if (topic === 'countries') { return countries[Math.floor(Math.random()*(countries.length))]; }
         else if (topic === 'presidents') { return presidents[Math.floor(Math.random()*(presidents.length))]; }
-        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length - 1))]; } // length-1 because the text file has a space at the end
+        else { return customWordBank[Math.floor(Math.random()*(customWordBank.length))]; } // length-1 because the text file has a space at the end
     }
 
     // get a random word to guess

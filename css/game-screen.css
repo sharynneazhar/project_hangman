@@ -66,12 +66,6 @@
     cursor: pointer;
 }
 
-.disabled {
-    pointer-events: none;
-    background-color: #607D8B;
-}
-
-
 /* ===== RESPONSIVE STYLES ===== */
 
 @media (max-width: 978px) {

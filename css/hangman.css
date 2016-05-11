@@ -20,6 +20,10 @@ body {
     padding: 10px 20px;
 }
 
+.disabled {
+    pointer-events: none;
+    background-color: #607D8B;
+}
 
 .button-area {
     width: 15vw;
