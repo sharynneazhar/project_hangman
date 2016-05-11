@@ -245,6 +245,11 @@ $(function() {
             // clear previous word
             blankSpaces = [];
 
+            // clear robot variables
+            rGuessArr = [];
+      			roboWord = [];
+      			roboFlag = true;
+
             // get a new word for player to guess
             wordToGuess = getRandomWord();
             for (var i = 0; i < wordToGuess.length; i++) {
@@ -267,8 +272,23 @@ $(function() {
     ///////////////////////////////////////////////////////////////////////////////////////
 
     if (sessionStorage.getItem('ai-flag')) {
+        var roboFlag = false;
         var rGuessArr = [];
-        var totalRoboMisses = 0;
+        var roboCorrectIndex = [];
+        var roboSpaces = [];
+        var roboWord = [];
+
+        // hide the letters with a hyphen
+        // if there are 2+ words, keep spaces in
+        if (wordToGuess) {
+            for (var i = 0; i < wordToGuess.length; i++) {
+                if (wordToGuess[i] === ' ') {
+                    roboSpaces[i] = ' ';
+                } else {
+                    roboSpaces[i] = '-';
+                }
+            }
+        }
 
         function isInArray(value, array) {
             return array.indexOf(value) > -1;
@@ -278,22 +298,67 @@ $(function() {
             return letters[Math.floor(Math.random() * letters.length)];
         }
 
+        $('.roboSpace').append(roboSpaces);
+
         $('.letters').click(function() {
             //Robo AI
             var roboGuess = randomLetter(); //generate random letter
             while (isInArray(roboGuess, rGuessArr)) { //checks if letter has already been guessed
                 roboGuess = randomLetter(); //if so find another letter
             }
-
             rGuessArr.push(roboGuess); //add letter to an array
-            //If guess deems that the guessed letter isn't in the word,
-            //add to missed guesses
-            if (totalRoboMisses < 6) { //if maximum alloted misses not reached
-                $('.roboGuesses').text($('.roboGuesses').html() + roboGuess);
-                totalRoboMisses++;
+
+            //If the random letter is in the word then
+            //Display an asterisks on the screen
+            var found = false;
+            for (var i = 0; i < wordToGuess.length; i++) {
+                if (roboGuess === wordToGuess[i]) {
+                    roboCorrectIndex.push(i);
+                    roboSpaces[i] = "*";
+                    roboWord[i] = roboGuess;
+                    found = true;
+                }
+                $('.roboSpace').html(roboSpaces);
+            }
+
+            //In order to level the playing field more
+            //the robot gets another attempt
+            if(!found){
+                while (isInArray(roboGuess, rGuessArr)) {
+                    roboGuess = randomLetter();
+                }
+                rGuessArr.push(roboGuess);
+
+                for (var i = 0; i < wordToGuess.length; i++) {
+                    if (roboGuess === wordToGuess[i]) {
+                        roboCorrectIndex.push(i);
+                        roboSpaces[i] = "*";
+                        roboWord[i] = roboGuess;
+                        found = true;
+                    }
+                    $('.roboSpace').html(roboSpaces);
+                }
+            }
+
+            //If correct guesses is equal to the word length
+            //then the robot won
+            if (roboWord.join('') === wordToGuess){
+                $('.roboGuesses').text("The Robot won");
+                alert("The Robot beat you :(");
+                location.href = 'index.html';
+            } else if (roboFlag) {
+                roboSpaces = [];
+                for (var i = 0; i < wordToGuess.length; i++) {
+                    if (wordToGuess[i] === ' ') {
+                        roboSpaces[i] = ' ';
+                    } else {
+                        roboSpaces[i] = '-';
+                    }
+                }
+                roboFlag = false;
+                $('.roboSpace').html(roboSpaces);
             } else {
-                $('.roboGuesses').text("The Robot Lost");
-                rGuessArr = [];
+                $('.roboGuesses').text("Robot's Guesses:");
             }
         });
     }
