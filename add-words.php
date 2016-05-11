@@ -21,8 +21,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 
-    <link rel="stylesheet" href="css/hangman.css">
     <link rel="stylesheet" href="css/add-words.css">
+    <link rel="stylesheet" href="css/hangman.css">
     <script src="js/hangman.js" type="text/javascript"></script>
     <script src="js/wordbank.js" type="text/javascript"></script>
 
@@ -37,19 +37,29 @@
         </div>
     </div>
 
-    <div class="add-heading text-center">Pick a Topic</div>
+    <div class="add-heading text-center">Create Your Own Word Bank</div>
     <div class="add-container">
-        <div class="button-area">
-            <button class="states" type="button">States</button>
+        <div class="input-group">
+            <label for="word">Word: </label>
+            <input class="add-field" type="text" name="word">
+            <div class="button-area add-btn" style="display: inline-block">
+                <button class="add-word" type="button">Add Word</button>
+            </div>
         </div>
-        <div class="button-area">
-            <button class="president" type="button">Presidents</button>
+
+        <div class="button-area delete-btn">
+            <button class="delete-list" type = "button">Delete List</button>
         </div>
-        <div class="button-area">
-            <button class="countries" type="button">Countries</button>
+        <div class="button-area delete-btn">
+            <button class="play-custom" type="button">Play Now</button>
         </div>
-        <div class="button-area button-block">
-            <button class="custom-topic" type="button">Add Your Own</button>
+
+        <!-- this is where the list of added words to show up -->
+        <ul class="list-group word-list"></ul>
+
+        <div class="stick-figure-add center-block visible-lg-block">
+            <div class="thought-bubble">Yeah...Add some <br> hard words in there</div>
+            <img src="img/stickman_add-words.png" />
         </div>
     </div>
 

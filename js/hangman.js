@@ -90,7 +90,7 @@ $(function() {
     $('.custom-topic').click(function() {
         console.log('Player chose to add custom word bank');
         sessionStorage.setItem('onCustomPage-flag', true);
-        location.href = 'add-words.html';
+        location.href = 'add-words.php';
     });
 
     ///////////////////////////////////////////////////////////////////////////////////////

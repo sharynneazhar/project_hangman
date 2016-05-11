@@ -15,7 +15,7 @@
 
 .word {
     margin-top: 20px;
-    font-size: 10vh;
+    font-size: 8vh;
 }
 
 .guesses {
@@ -27,7 +27,7 @@
 
 .roboSpace {
     margin-top: 20px;
-    font-size: 10vh;
+    font-size: 8vh;
 }
 
 .roboGuesses {
