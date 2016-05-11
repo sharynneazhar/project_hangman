@@ -37,8 +37,9 @@
     color: #607D8B;
 }
 
-.roboWord {
-    font-size: 10vh;
+.roboSpace {
+    margin-bottom: 2px;
+    font-size: 8vh;
 }
 
 .roboGuesses {
@@ -106,8 +107,9 @@
         font-size: 3vh;
     }
 
-    .roboWord {
-        font-size: 8vh;
+    .roboSpace {
+	    margin-bottom: 15px;
+        font-size: 15vh;
     }
 
 	.roboGuesses {
