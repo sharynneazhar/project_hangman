@@ -4,8 +4,6 @@ $(function() {
     /// GENERAL BUTTON HANDLING FOR FRONTEND BY SHARYNNE AZHAR
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    var ai = false;
-
     function goToGame() {
         if (!ai) {
             location.href = 'game.html';
@@ -27,11 +25,23 @@ $(function() {
         gameOver();
     });
 
-    $('.mode').click(function() {
+    $('.ai-mode').click(function() {
         ai = !ai;
         console.log("AI: " + ai);
+        sessionStorage.setItem('ai-flag', ai);
         $(this).text(function(i, text) {
             return text === 'Select Mode: AI' ? 'Select Mode: 1P' : 'Select Mode: AI';
+        });
+    });
+
+    $('.ai-diff').click(function() {
+        aiDiff++;
+        if (aiDiff > 2) {
+            aiDiff = 1;
+        }
+        sessionStorage.setItem('dif-flag', aiDiff);
+        $(this).text(function(i, text) {
+            return text === 'AI Difficulty: Easy' ? 'AI Difficulty: Hard' : 'AI Difficulty: Easy';
         });
     });
 
@@ -289,7 +299,10 @@ $(function() {
     /// ROBOT AI SECTION by Denis Sehic
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    if (ai) {
+    var ai = false;
+    var aiDiff = 1;
+
+    if (sessionStorage.getItem('ai-flag')) {
         var roboFlag = false;
         var rGuessArr = [];
         var roboCorrectIndex = [];
@@ -316,7 +329,7 @@ $(function() {
             return letters[Math.floor(Math.random() * letters.length)];
         }
 
-        $('.roboSpace').append(roboSpaces);
+        $('.roboSpace').html(roboSpaces);
 
         $('.letters').click(function() {
             // disable the button after click
@@ -346,6 +359,7 @@ $(function() {
 
             //In order to level the playing field more
             //the robot gets another attempt
+            var newDif = sessionStorage.getItem('dif-flag')
             if (!found) {
                 while (isInArray(roboGuess, rGuessArr)) {
                     roboGuess = randomLetter();
@@ -360,6 +374,25 @@ $(function() {
                         found = true;
                     }
                     $('.roboSpace').html(roboSpaces);
+                }
+            }
+            //if Hard difficulty is selected, do it again
+            if (newDif == 2) {
+                if (!found) {
+                    while (isInArray(roboGuess, rGuessArr)) {
+                        roboGuess = randomLetter();
+                    }
+                    rGuessArr.push(roboGuess);
+
+                    for (var i = 0; i < wordToGuess.length; i++) {
+                        if (roboGuess === wordToGuess[i]) {
+                            roboCorrectIndex.push(i);
+                            roboSpaces[i] = "*";
+                            roboWord[i] = roboGuess;
+                            found = true;
+                        }
+                        $('.roboSpace').html(roboSpaces);
+                    }
                 }
             }
 
@@ -378,9 +411,8 @@ $(function() {
                     }
                 }
 
-                $('.letters').removeClass('disabled');
-
                 roboFlag = false;
+                $('.letters').removeClass('disabled');
                 $('.roboSpace').html(roboSpaces);
             } else {
                 $('.roboGuesses').text("Robot's Guesses: Shhh");

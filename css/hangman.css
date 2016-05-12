@@ -44,6 +44,10 @@ body {
     cursor: pointer;
 }
 
+.secondary-btn {
+    background-color: #607D8B !important;
+}
+
 .back-button {
     background-color: transparent !important;
     display: inline-block;
