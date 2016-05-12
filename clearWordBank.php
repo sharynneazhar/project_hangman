@@ -1,6 +1,6 @@
 <?php
 
-$myFile = fopen('wordBank.txt', 'w+') or die ('Unable to open file');
-fclose($myFile);
+    $myFile = fopen('wordbank.txt', 'w+') or die ('Unable to open file');
+    fclose($myFile);
 
 ?>

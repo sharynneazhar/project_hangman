@@ -40,7 +40,7 @@ body {
     border-radius: 0;
     border: none;
     color: #F5F5F5;
-    font-size: 3vw;
+    font-size: 2.5vw;
     cursor: pointer;
 }
 
@@ -89,7 +89,7 @@ body {
 }
 
 .title {
-    font-size: 16vw;
+    font-size: 14vw;
 }
 
 

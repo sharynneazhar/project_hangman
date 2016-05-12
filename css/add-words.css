@@ -1,5 +1,4 @@
 .add-heading {
-    margin-top: -40px;
     margin-bottom: 30px;
     font-size: 8vw;
 }
@@ -7,6 +6,7 @@
 .add-subheading {
     color: #607D8B;
     font-size: 3vw;
+    margin-top: 20px;
     margin-bottom: 15px;
 }
 
@@ -18,6 +18,7 @@
 
 form {
     width: 100%;
+    margin-top: 0;
 }
 
 .input-group {
@@ -26,14 +27,16 @@ form {
 }
 
 .input-group label {
-    font-size: 2vw;
-    padding-right: 30px;
+    font-size: 3vw;
+    font-weight: lighter;
+    margin-top: -5px;
     margin-bottom: 20px;
 }
 
 .input-group input {
     display: block;
     width: 40%;
+    margin-bottom: 40px;
 }
 
 .add-field {
@@ -67,6 +70,15 @@ form {
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.scrollbar {
+    height: auto;
+    max-height: 50vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    min-width: 135px;
+    margin-top: 0px;
 }
 
 .new-word {

@@ -1,10 +1,18 @@
 $(function() {
 
     ///////////////////////////////////////////////////////////////////////////////////////
-    /// GENERAL BUTTON HANDLING BY SHARYNNE AZHAR
+    /// GENERAL BUTTON HANDLING FOR FRONTEND BY SHARYNNE AZHAR
     ///////////////////////////////////////////////////////////////////////////////////////
 
     var ai = false;
+
+    function goToGame() {
+        if (!ai) {
+            location.href = 'game.html';
+        } else {
+            location.href = 'roboGame.html';
+        }
+    }
 
     function clearWordBank() {
         customWordBank = [];
@@ -14,11 +22,6 @@ $(function() {
         clearWordBank();
         location.href = 'index.html';
     }
-
-    $('.back').click(function() {
-        parent.history.back();
-        return false;
-    });
 
     $('.done').click(function() {
         gameOver();
@@ -32,18 +35,10 @@ $(function() {
         });
     });
 
-
     // button handling for topic pick
+    // flag is used to pick random words from respective topic
+    // sessionStorage to persist data through reloads
     var topic = sessionStorage.getItem('topic-flag') || 'states';
-
-    function goToGame() {
-        if (!ai) {
-            location.href = 'game.html';
-        } else {
-            location.href = 'roboGame.html';
-        }
-    }
-
     $('.states').click(function() {
         console.log('Player chose states');
         sessionStorage.setItem('topic-flag', 'states');
@@ -73,6 +68,14 @@ $(function() {
 
     var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
 
+    // get the word from the text file into the array
+    $.get('wordbank.txt', function(data) {
+        customWordBank = data.split('\n');
+        customWordBank.pop(); // removing whitespace item at the end;
+        // need to store in session or else the data is lost on refresh
+        sessionStorage.setItem('customWordBank', JSON.stringify(customWordBank));
+    });
+
     $('.add-field').focus();
 
     $('.add-word').click(function(event) {
@@ -85,13 +88,13 @@ $(function() {
         };
 
         // save to the text file
-        $.post('wordbank.php', data, function(dataFromServer) {
-            console.log('successfully added to word bank: ' + dataFromServer);
+        $.post('wordbank.php', data, function(response) {
+            console.log('successfully added to word bank: ' + response);
         });
 
         if (inputValue.length > 0) {
-            // add the word to the list and the display screen
-            customWordBank.unshift(inputValue);
+            // add the word to the word bank and the display screen
+            customWordBank.push(inputValue);
             $('.word-list').prepend('<li class=\"list-group-item new-word\">' + inputValue + '</li>');
         }
 
@@ -105,13 +108,7 @@ $(function() {
     });
 
     $('.play-custom').click(function() {
-        $.get('wordBank.txt', function(data) {
-            var dataHold = data.split(',');
-            dataHold.pop(); // removing whitespace item at the end;
-            // need to store in session or else the data is lost on refresh
-            sessionStorage.setItem('customWordBank', JSON.stringify(dataHold));
-        });
-
+        console.log(customWordBank);
         if (customWordBank.length > 0) {
             sessionStorage.setItem('topic-flag', 'customWordBank');
             goToGame();

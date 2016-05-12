@@ -28,29 +28,20 @@
 
 </head>
 <body>
-    <div class="row">
-        <div class="back-button">
-            <button class="back" type="button">
-                <span class="glyphicon glyphicon-menu-left" style="font-size: 18px"></span>
-                Back
-            </button>
-        </div>
-    </div>
 
     <div class="add-heading text-center">Create Your Own Word Bank</div>
     <div class="add-container">
-
         <div class="row">
             <div class="col-md-6">
                 <div class="add-subheading">Current Word Bank</div>
-                <ul class="list-group word-list">
+                <ul class="list-group word-list scrollbar">
+                    <!-- displays all the words currently in word bank file -->
                     <?php
-                        $myfile = fopen("wordBank.txt", "r") or die("Unable to open file!");
-                        $data = fread($myfile,filesize("wordBank.txt"));
+                        $myfile = fopen("wordbank.txt", "r") or die("Unable to open file!");
+                        $data = fread($myfile,filesize("wordbank.txt"));
                         $words = explode("\n", $data);
 
-                        foreach($words as $word)
-                        {
+                        foreach($words as $word) {
                           echo '<li class="list-group-item new-word">' . $word . '</li>';
                         }
 
@@ -60,19 +51,19 @@
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <form action="" method="">
-                        <label class="add-subheading" for="word">Word</label>
+                    <form action="">
+                        <label class="add-subheading" for="word">New Word</label>
                         <input class="add-field" type="text" name="word">
+                        <div class="button-area add-btn">
+                            <button class="add-word" type="submit">Add</button>
+                        </div>
+                        <div class="button-area add-btn">
+                            <button class="delete-list" type = "button">Delete List</button>
+                        </div>
+                        <div class="button-area add-btn">
+                            <button class="play-custom" type="button">Play Now</button>
+                        </div>
                     </form>
-                </div>
-                <div class="button-area add-btn">
-                    <button class="add-word" type="submit">Add</button>
-                </div>
-                <div class="button-area add-btn">
-                    <button class="delete-list" type = "button">Delete List</button>
-                </div>
-                <div class="button-area add-btn">
-                    <button class="play-custom" type="button">Play Now</button>
                 </div>
             </div>
         </div>
