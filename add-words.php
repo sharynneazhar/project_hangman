@@ -28,34 +28,45 @@
 
 </head>
 <body>
-    <div class="row">
-        <div class="back-button">
-            <button class="back" type="button">
-                <span class="glyphicon glyphicon-menu-left" style="font-size: 18px"></span>
-                Back
-            </button>
-        </div>
-    </div>
 
     <div class="add-heading text-center">Create Your Own Word Bank</div>
     <div class="add-container">
-        <div class="input-group">
-            <label for="word">Word: </label>
-            <input class="add-field" type="text" name="word">
-            <div class="button-area add-btn" style="display: inline-block">
-                <button class="add-word" type="button">Add Word</button>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="add-subheading">Current Word Bank</div>
+                <ul class="list-group word-list scrollbar">
+                    <!-- displays all the words currently in word bank file -->
+                    <?php
+                        $myfile = fopen("wordbank.txt", "r") or die("Unable to open file!");
+                        $data = fread($myfile,filesize("wordbank.txt"));
+                        $words = explode("\n", $data);
+
+                        foreach($words as $word) {
+                          echo '<li class="list-group-item new-word">' . $word . '</li>';
+                        }
+
+                        fclose($myfile);
+                    ?>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <form action="">
+                        <label class="add-subheading" for="word">New Word</label>
+                        <input class="add-field" type="text" name="word">
+                        <div class="button-area add-btn">
+                            <button class="add-word" type="submit">Add</button>
+                        </div>
+                        <div class="button-area add-btn">
+                            <button class="delete-list" type = "button">Delete List</button>
+                        </div>
+                        <div class="button-area add-btn">
+                            <button class="play-custom" type="button">Play Now</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <div class="button-area delete-btn">
-            <button class="delete-list" type = "button">Delete List</button>
-        </div>
-        <div class="button-area delete-btn">
-            <button class="play-custom" type="button">Play Now</button>
-        </div>
-
-        <!-- this is where the list of added words to show up -->
-        <ul class="list-group word-list"></ul>
 
         <div class="stick-figure-add center-block visible-lg-block">
             <div class="thought-bubble">Yeah...Add some <br> hard words in there</div>

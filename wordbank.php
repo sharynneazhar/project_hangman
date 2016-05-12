@@ -13,11 +13,12 @@
     }
 
     $word = $_POST['word'];
+    $word = strtolower($word);
 
     // write to file
-    $filename = "customWordBank.txt";
+    $filename = "wordbank.txt";
     $file = fopen($filename, 'a+');
-    fwrite($file, $word . ',');
+    fwrite($file, $word . PHP_EOL); // write the word to file line by line
     fclose($file);
 
 	echo $word;

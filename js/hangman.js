@@ -1,65 +1,8 @@
 $(function() {
 
     ///////////////////////////////////////////////////////////////////////////////////////
-    /// GENERAL BUTTON HANDLING BY SHARYNNE AZHAR
+    /// GENERAL BUTTON HANDLING FOR FRONTEND BY SHARYNNE AZHAR
     ///////////////////////////////////////////////////////////////////////////////////////
-
-    // session storage allow the value of this flag to be preserve when routing to next page or on reload
-    var ai = sessionStorage.getItem('ai-flag') || false;
-    var onCustomPage = sessionStorage.getItem('onCustomPage-flag') || false;
-
-    function clearCustomWordBank() {
-        customWordBank = [];
-        $.ajax({
-            url: 'clearWordBank.php',
-            success: function(response) {
-                console.log('Cleared file!');
-            }
-        });
-    }
-
-    function gameOver() {
-        // clear session storage
-        sessionStorage.clear();
-
-        // clear the custom word bank file
-        if (onCustomPage) {
-            clearCustomWordBank();
-        }
-
-        location.href = 'index.html';
-    }
-
-    // general button handling
-    $('.play').click(function() {
-        location.href = 'pick-topic.html';
-    });
-
-    $('.back').click(function() {
-        if (onCustomPage) {
-            sessionStorage.removeItem('onCustomPage-flag');
-        }
-
-        parent.history.back();
-        return false;
-    });
-
-    $('.done').click(function() {
-        gameOver();
-    });
-
-    $('.mode').click(function() {
-        ai = !ai;
-        console.log("AI: " + ai);
-        sessionStorage.setItem('ai-flag', ai);
-        $(this).text(function(i, text) {
-            return text === 'Select Mode: AI' ? 'Select Mode: 1P' : 'Select Mode: AI';
-        });
-    });
-
-
-    // button handling for topic pick
-    var topic = sessionStorage.getItem('topic-flag') || 'states';
 
     function goToGame() {
         if (!ai) {
@@ -69,6 +12,43 @@ $(function() {
         }
     }
 
+    function clearWordBank() {
+        customWordBank = [];
+    }
+
+    function gameOver() {
+        clearWordBank();
+        location.href = 'index.html';
+    }
+
+    $('.done').click(function() {
+        gameOver();
+    });
+
+    $('.ai-mode').click(function() {
+        ai = !ai;
+        console.log("AI: " + ai);
+        sessionStorage.setItem('ai-flag', ai);
+        $(this).text(function(i, text) {
+            return text === 'Select Mode: AI' ? 'Select Mode: 1P' : 'Select Mode: AI';
+        });
+    });
+
+    $('.ai-diff').click(function() {
+        aiDiff++;
+        if (aiDiff > 2) {
+            aiDiff = 1;
+        }
+        sessionStorage.setItem('dif-flag', aiDiff);
+        $(this).text(function(i, text) {
+            return text === 'AI Difficulty: Easy' ? 'AI Difficulty: Hard' : 'AI Difficulty: Easy';
+        });
+    });
+
+    // button handling for topic pick
+    // flag is used to pick random words from respective topic
+    // sessionStorage to persist data through reloads
+    var topic = sessionStorage.getItem('topic-flag') || 'states';
     $('.states').click(function() {
         console.log('Player chose states');
         sessionStorage.setItem('topic-flag', 'states');
@@ -89,7 +69,6 @@ $(function() {
 
     $('.custom-topic').click(function() {
         console.log('Player chose to add custom word bank');
-        sessionStorage.setItem('onCustomPage-flag', true);
         location.href = 'add-words.php';
     });
 
@@ -99,14 +78,15 @@ $(function() {
 
     var customWordBank = JSON.parse(sessionStorage.getItem('customWordBank')) || [];
 
-    $('.add-field').focus();
-
-    // allow enter key to work when adding a word
-    $('input[name=word]').keyup(function(event) {
-        if (event.keyCode == 13) {
-            $('.add-word').click();
-        }
+    // get the word from the text file into the array
+    $.get('wordbank.txt', function(data) {
+        customWordBank = data.split('\n');
+        customWordBank.pop(); // removing whitespace item at the end;
+        // need to store in session or else the data is lost on refresh
+        sessionStorage.setItem('customWordBank', JSON.stringify(customWordBank));
     });
+
+    $('.add-field').focus();
 
     $('.add-word').click(function(event) {
         event.preventDefault();
@@ -114,17 +94,17 @@ $(function() {
         // get the word from input field
         var inputValue = $('input[name=word]').val();
         var data = {
-            word: inputValue
+            word: inputValue.toLowerCase()
         };
 
         // save to the text file
-        var addWord = $.post('wordbank.php', data, function(dataFromServer) {
-            console.log('successfully added to word bank: ' + dataFromServer);
+        $.post('wordbank.php', data, function(response) {
+            console.log('successfully added to word bank: ' + response);
         });
 
         if (inputValue.length > 0) {
-            // add the word to the list and the display screen
-            customWordBank.unshift(inputValue);
+            // add the word to the word bank and the display screen
+            customWordBank.push(inputValue);
             $('.word-list').prepend('<li class=\"list-group-item new-word\">' + inputValue + '</li>');
         }
 
@@ -133,19 +113,12 @@ $(function() {
     });
 
     $('.delete-list').click(function() {
-        clearCustomWordBank();
+        clearWordBank();
         $('.word-list').empty();
     });
 
     $('.play-custom').click(function() {
-        // get words from file
-        $.get('customWordBank.txt', function(data) {
-            var dataHold = data.split(',');
-            dataHold.pop(); // removing whitespace item at the end;
-            // need to store in session or else the data is lost on refresh
-            sessionStorage.setItem('customWordBank', JSON.stringify(dataHold));
-        });
-
+        console.log(customWordBank);
         if (customWordBank.length > 0) {
             sessionStorage.setItem('topic-flag', 'customWordBank');
             goToGame();
@@ -326,6 +299,9 @@ $(function() {
     /// ROBOT AI SECTION by Denis Sehic
     ///////////////////////////////////////////////////////////////////////////////////////
 
+    var ai = false;
+    var aiDiff = 1;
+
     if (sessionStorage.getItem('ai-flag')) {
         var roboFlag = false;
         var rGuessArr = [];
@@ -353,7 +329,7 @@ $(function() {
             return letters[Math.floor(Math.random() * letters.length)];
         }
 
-        $('.roboSpace').append(roboSpaces);
+        $('.roboSpace').html(roboSpaces);
 
         $('.letters').click(function() {
             // disable the button after click
@@ -383,6 +359,7 @@ $(function() {
 
             //In order to level the playing field more
             //the robot gets another attempt
+            var newDif = sessionStorage.getItem('dif-flag')
             if (!found) {
                 while (isInArray(roboGuess, rGuessArr)) {
                     roboGuess = randomLetter();
@@ -397,6 +374,25 @@ $(function() {
                         found = true;
                     }
                     $('.roboSpace').html(roboSpaces);
+                }
+            }
+            //if Hard difficulty is selected, do it again
+            if (newDif == 2) {
+                if (!found) {
+                    while (isInArray(roboGuess, rGuessArr)) {
+                        roboGuess = randomLetter();
+                    }
+                    rGuessArr.push(roboGuess);
+
+                    for (var i = 0; i < wordToGuess.length; i++) {
+                        if (roboGuess === wordToGuess[i]) {
+                            roboCorrectIndex.push(i);
+                            roboSpaces[i] = "*";
+                            roboWord[i] = roboGuess;
+                            found = true;
+                        }
+                        $('.roboSpace').html(roboSpaces);
+                    }
                 }
             }
 
@@ -415,9 +411,8 @@ $(function() {
                     }
                 }
 
-                $('.letters').removeClass('disabled');
-
                 roboFlag = false;
+                $('.letters').removeClass('disabled');
                 $('.roboSpace').html(roboSpaces);
             } else {
                 $('.roboGuesses').text("Robot's Guesses: Shhh");
