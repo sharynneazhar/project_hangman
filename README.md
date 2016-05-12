@@ -9,6 +9,11 @@ A Javascript-based Hangman game created for a class project (EECS 368 - Programm
 * Zackery Mryyan - responsible for the game engine
 * Denis Sehic - responsible for the AI
 
+#### Features
+* Single Player mode
+* AI mode with easy or medium difficulty
+* Create your own wordbank!
+
 #### Screenshots
 ######Full View
 <img src="https://cloud.githubusercontent.com/assets/10108593/14924500/8e9dba20-0e08-11e6-9132-305285593c0b.png" alt="Full View" title="Full View" width="569px">
