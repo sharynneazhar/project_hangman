@@ -4,42 +4,18 @@ $(function() {
     /// GENERAL BUTTON HANDLING BY SHARYNNE AZHAR
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    // session storage allow the value of this flag to be preserve when routing to next page or on reload
-    var ai = sessionStorage.getItem('ai-flag') || false;
-    var onCustomPage = sessionStorage.getItem('onCustomPage-flag') || false;
+    var ai = false;
 
-    function clearCustomWordBank() {
+    function clearWordBank() {
         customWordBank = [];
-        $.ajax({
-            url: 'clearWordBank.php',
-            success: function(response) {
-                console.log('Cleared file!');
-            }
-        });
     }
 
     function gameOver() {
-        // clear session storage
-        sessionStorage.clear();
-
-        // clear the custom word bank file
-        if (onCustomPage) {
-            clearCustomWordBank();
-        }
-
+        clearWordBank();
         location.href = 'index.html';
     }
 
-    // general button handling
-    $('.play').click(function() {
-        location.href = 'pick-topic.html';
-    });
-
     $('.back').click(function() {
-        if (onCustomPage) {
-            sessionStorage.removeItem('onCustomPage-flag');
-        }
-
         parent.history.back();
         return false;
     });
@@ -51,7 +27,6 @@ $(function() {
     $('.mode').click(function() {
         ai = !ai;
         console.log("AI: " + ai);
-        sessionStorage.setItem('ai-flag', ai);
         $(this).text(function(i, text) {
             return text === 'Select Mode: AI' ? 'Select Mode: 1P' : 'Select Mode: AI';
         });
@@ -89,7 +64,6 @@ $(function() {
 
     $('.custom-topic').click(function() {
         console.log('Player chose to add custom word bank');
-        sessionStorage.setItem('onCustomPage-flag', true);
         location.href = 'add-words.php';
     });
 
@@ -101,24 +75,17 @@ $(function() {
 
     $('.add-field').focus();
 
-    // allow enter key to work when adding a word
-    $('input[name=word]').keyup(function(event) {
-        if (event.keyCode == 13) {
-            $('.add-word').click();
-        }
-    });
-
     $('.add-word').click(function(event) {
         event.preventDefault();
 
         // get the word from input field
         var inputValue = $('input[name=word]').val();
         var data = {
-            word: inputValue
+            word: inputValue.toLowerCase()
         };
 
         // save to the text file
-        var addWord = $.post('wordbank.php', data, function(dataFromServer) {
+        $.post('wordbank.php', data, function(dataFromServer) {
             console.log('successfully added to word bank: ' + dataFromServer);
         });
 
@@ -133,13 +100,12 @@ $(function() {
     });
 
     $('.delete-list').click(function() {
-        clearCustomWordBank();
+        clearWordBank();
         $('.word-list').empty();
     });
 
     $('.play-custom').click(function() {
-        // get words from file
-        $.get('customWordBank.txt', function(data) {
+        $.get('wordBank.txt', function(data) {
             var dataHold = data.split(',');
             dataHold.pop(); // removing whitespace item at the end;
             // need to store in session or else the data is lost on refresh
@@ -326,7 +292,7 @@ $(function() {
     /// ROBOT AI SECTION by Denis Sehic
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    if (sessionStorage.getItem('ai-flag')) {
+    if (ai) {
         var roboFlag = false;
         var rGuessArr = [];
         var roboCorrectIndex = [];
