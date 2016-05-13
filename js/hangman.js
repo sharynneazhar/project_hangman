@@ -5,11 +5,7 @@ $(function() {
     ///////////////////////////////////////////////////////////////////////////////////////
 
     function goToGame() {
-        if (!ai) {
-            location.href = 'game.html';
-        } else {
-            location.href = 'roboGame.html';
-        }
+        location.href = (!ai) ? 'game.html' : 'roboGame.html';
     }
 
     function clearWordBank() {
@@ -17,12 +13,19 @@ $(function() {
     }
 
     function gameOver() {
-        clearWordBank();
-        location.href = 'index.html';
+        $('.hold').addClass('over').empty();
+        $('.over').html("Game Over");
+        setTimeout(function() {
+            clearWordBank();
+            sessionStorage.clear();
+            location.href = 'index.html';
+        }, 3000);
     }
 
     $('.done').click(function() {
-        gameOver();
+        clearWordBank();
+        sessionStorage.clear();
+        location.href = 'index.html';
     });
 
     $('.ai-mode').click(function() {
@@ -41,7 +44,8 @@ $(function() {
         }
         sessionStorage.setItem('dif-flag', aiDiff);
         $(this).text(function(i, text) {
-            return text === 'AI Difficulty: Easy' ? 'AI Difficulty: Hard' : 'AI Difficulty: Easy';
+            return text === 'AI Difficulty: Easy' ? 'AI Difficulty: Hard' :
+                'AI Difficulty: Easy';
         });
     });
 
@@ -251,7 +255,6 @@ $(function() {
             });
             $('.hangman').html(image);
         } else if (strikes === 6) {
-            alert("Game Over");
             gameOver();
         }
 
@@ -321,11 +324,11 @@ $(function() {
             }
         }
 
-        function isInArray(value, array) {
+        var isInArray = function(value, array) {
             return array.indexOf(value) > -1;
         }
 
-        function randomLetter() {
+        var randomLetter = function() {
             return letters[Math.floor(Math.random() * letters.length)];
         }
 

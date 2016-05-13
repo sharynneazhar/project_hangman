@@ -13,6 +13,12 @@
     font-size: 6vw;
 }
 
+.over {
+    margin-top: 100px;
+    font-size: 10vw;
+    color: #FF5722;
+}
+
 .word {
     margin-top: 20px;
     font-size: 8vh;
