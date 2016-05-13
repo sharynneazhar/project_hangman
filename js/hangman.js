@@ -3,6 +3,8 @@ $(function() {
     ///////////////////////////////////////////////////////////////////////////////////////
     /// GENERAL BUTTON HANDLING FOR FRONTEND BY SHARYNNE AZHAR
     ///////////////////////////////////////////////////////////////////////////////////////
+    var ai = sessionStorage.getItem('ai-flag') || false;
+    var aiDiff = 1;
 
     function goToGame() {
         location.href = (!ai) ? 'game.html' : 'roboGame.html';
@@ -27,6 +29,10 @@ $(function() {
         sessionStorage.clear();
         location.href = 'index.html';
     });
+
+    // display ai button text based on the value of the ai flag
+    var aiText = (!ai) ? 'Select Mode: 1P' : 'Select Mode: AI';
+    $('.ai-mode').html(aiText);
 
     $('.ai-mode').click(function() {
         ai = !ai;
@@ -302,10 +308,7 @@ $(function() {
     /// ROBOT AI SECTION by Denis Sehic
     ///////////////////////////////////////////////////////////////////////////////////////
 
-    var ai = false;
-    var aiDiff = 1;
-
-    if (sessionStorage.getItem('ai-flag')) {
+    if (ai) {
         var roboFlag = false;
         var rGuessArr = [];
         var roboCorrectIndex = [];
