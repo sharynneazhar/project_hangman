@@ -9,14 +9,15 @@ $white:     #F5F5F5;
 html {
     /* Background pattern from subtlepatterns.com */
     font-family: Amatic SC;
-    font-weight: 300;
+    font-weight: bold;
     margin: 0;
 }
 
 body {
     background: url('../img/lined_paper.png');
     font-family: Amatic SC;
-    font-weight: 300;
+    font-weight: 600;
+    letter-spacing: 1px;
     padding: 10px 20px;
 }
 
@@ -28,7 +29,7 @@ body {
 .button-area {
     width: 15vw;
     display: inline-block;
-    margin: 20px 15px;
+    margin: 30px 15px;
     background-color: #FF5722;
     text-align: center;
 }
@@ -41,6 +42,7 @@ body {
     border: none;
     color: #F5F5F5;
     font-size: 2.5vw;
+    letter-spacing: 1px;
     cursor: pointer;
 }
 
@@ -105,24 +107,17 @@ body {
     }
 
     .title {
-        font-size: 30vw;
+        font-size: 25vw;
     }
 
     .button-area {
-        width: 65%;
+        width: 45%;
         margin: 15px auto;
         display: block;
     }
 
     .button-area button {
-        font-size: 10vw;
-    }
-
-    .back-button {
-        margin: 15px;
-    }
-
-    .back-button button {
-        font-size: 3vh;
+        display: inline-block;
+        font-size: 5vw;
     }
 }

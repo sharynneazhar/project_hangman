@@ -3,8 +3,11 @@ $(function() {
     ///////////////////////////////////////////////////////////////////////////////////////
     /// GENERAL BUTTON HANDLING FOR FRONTEND BY SHARYNNE AZHAR
     ///////////////////////////////////////////////////////////////////////////////////////
+
+    // sessionStorage to persist data through reloads
+    var topic = sessionStorage.getItem('topic-flag') || '';
     var ai = sessionStorage.getItem('ai-flag') || false;
-    var aiDiff = 1;
+    var aiDiff = sessionStorage.getItem('dif-flag') || 1;
 
     function goToGame() {
         location.href = (!ai) ? 'game.html' : 'roboGame.html';
@@ -31,18 +34,18 @@ $(function() {
     });
 
     // display ai button text based on the value of the ai flag
-    var aiText = (!ai) ? 'Select Mode: 1P' : 'Select Mode: AI';
+    var aiText = (!ai) ? 'Mode: 1P' : 'Mode: vs. AI';
     $('.ai-mode').html(aiText);
-
     $('.ai-mode').click(function() {
         ai = !ai;
-        console.log("AI: " + ai);
         sessionStorage.setItem('ai-flag', ai);
         $(this).text(function(i, text) {
-            return text === 'Select Mode: AI' ? 'Select Mode: 1P' : 'Select Mode: AI';
+            return text === 'Mode: vs. AI' ? 'Mode: 1P' : 'Mode: vs. AI';
         });
     });
 
+    var aiDiffText = (aiDiff === 1) ? 'Bot Level: Easy' : 'Bot Level: Hard';
+    $('.ai-diff').html(aiDiffText);
     $('.ai-diff').click(function() {
         aiDiff++;
         if (aiDiff > 2) {
@@ -50,15 +53,12 @@ $(function() {
         }
         sessionStorage.setItem('dif-flag', aiDiff);
         $(this).text(function(i, text) {
-            return text === 'AI Difficulty: Easy' ? 'AI Difficulty: Hard' :
-                'AI Difficulty: Easy';
+            return text === 'Bot Level: Easy' ? 'Bot Level: Hard' :
+                'Bot Level: Easy';
         });
     });
 
     // button handling for topic pick
-    // flag is used to pick random words from respective topic
-    // sessionStorage to persist data through reloads
-    var topic = sessionStorage.getItem('topic-flag') || 'states';
     $('.states').click(function() {
         console.log('Player chose states');
         sessionStorage.setItem('topic-flag', 'states');
@@ -128,7 +128,7 @@ $(function() {
     });
 
     $('.play-custom').click(function() {
-        console.log(customWordBank);
+        console.log(customWordBank.length);
         if (customWordBank.length > 0) {
             sessionStorage.setItem('topic-flag', 'customWordBank');
             goToGame();
@@ -382,8 +382,9 @@ $(function() {
                     $('.roboSpace').html(roboSpaces);
                 }
             }
+
             //if Hard difficulty is selected, do it again
-            if (newDif == 2) {
+            if (newDif === 2) {
                 if (!found) {
                     while (isInArray(roboGuess, rGuessArr)) {
                         roboGuess = randomLetter();

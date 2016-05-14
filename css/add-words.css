@@ -10,12 +10,6 @@
     margin-bottom: 15px;
 }
 
-.add-container {
-    width: 80%;
-    margin: 15px auto;
-    text-align: center;
-}
-
 form {
     width: 100%;
     margin-top: 0;
@@ -28,8 +22,6 @@ form {
 
 .input-group label {
     font-size: 3vw;
-    font-weight: lighter;
-    margin-top: -5px;
     margin-bottom: 20px;
 }
 
@@ -82,7 +74,7 @@ form {
 }
 
 .new-word {
-    font-size: 24px;
+    font-size: 2vw;
     font-weight: bold;
 }
 
@@ -109,6 +101,10 @@ form {
         margin-top: 20px;
         margin-bottom: 30px;
         font-size: 15vw;
+    }
+
+    .add-subheading {
+        font-size: 8vw;
     }
 
     .add-field {

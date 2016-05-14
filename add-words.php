@@ -30,7 +30,7 @@
 <body>
 
     <div class="add-heading text-center">Create Your Own Word Bank</div>
-    <div class="add-container">
+    <div class="container text-center">
         <div class="row">
             <div class="col-md-6">
                 <div class="add-subheading">Current Word Bank</div>
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <form action="">
+                    <form>
                         <label class="add-subheading" for="word">New Word</label>
                         <input class="add-field" type="text" name="word">
                         <div class="button-area add-btn">
