@@ -15,5 +15,8 @@ A Javascript-based Hangman game created for a class project (EECS 368 - Programm
 * Create your own wordbank!
 
 #### Screenshots
-######Full View
-<img src="screenshot-full.png" alt="Full View" title="Full View" width="569px">
+######Home View
+<img src="screenshot-home.png" alt="Home Screen" title="Home Screen" width="569px">
+
+######Game View
+<img src="screenshot-game.png" alt="Game Screen" title="Game Screen" width="569px">
