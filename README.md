@@ -1,7 +1,7 @@
 # Hangman
 A Javascript-based Hangman game created for a class project (EECS 368 - Programming Languages and Paradigms)
 
-[Click here to see the page!](http://sharynneazhar.github.io/project_hangman/)
+[Click here to see the page!](http://people.eecs.ku.edu/~sazhar/hangman/)
 
 #### The Team
 * Sharynne Azhar - responsible for the visual styling and graphics
